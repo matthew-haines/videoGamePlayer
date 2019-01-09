@@ -73,7 +73,6 @@ void loadDB() {
 
     user *temp = malloc(sizeof(user));
     fread(temp, sizeof(user), 1, dbfile);
-    
 }
 
 int main() {
@@ -84,7 +83,5 @@ int main() {
     concatenate(salt, pass, to_be_hashed);
 
     printf("%X", hash(to_be_hashed));
-int main(){
-    int a;
-    int b;
+
 }
