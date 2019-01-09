@@ -83,5 +83,5 @@ int main() {
     concatenate(salt, pass, to_be_hashed);
 
     printf("%X", hash(to_be_hashed));
-    printf("STOP MATT");
+    //COMMENT IT MATT
 }
