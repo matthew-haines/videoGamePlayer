@@ -4,18 +4,19 @@
 #include <string.h>
 
 typedef struct {
-    int month;
-    int day;
-    int year;
+    int mth;
+    int dy;
+    int yr;
 } dob;
 
 typedef struct {
-    int username;
-    int password;
-    float salt;
+    char usrnm[10];
+    int pswrd;
+    double salt;
     dob birth;
-    int topScore;
+    int tpSc;
 } user;
 
 int main() {
+    return 0;
 }
