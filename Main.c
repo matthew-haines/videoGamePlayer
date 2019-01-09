@@ -84,4 +84,7 @@ int main() {
     concatenate(salt, pass, to_be_hashed);
 
     printf("%X", hash(to_be_hashed));
+int main(){
+    int a;
+    int b;
 }
