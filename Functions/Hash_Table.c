@@ -12,7 +12,7 @@ typedef struct {
 
 typedef struct {
     char usrnm[10];
-    int pswrd;
+    char pswrd[10];
     double salt;
     dob birth;
     int tpSc;
@@ -34,21 +34,35 @@ void create(user * Target){
     do{
         printf("Enter Username:");
         scanf("%s", temp);
-        
         found = search(Target, temp);
-        len = strlen(temp);
-        if(found == 1 || len > 8 || len < 6) printf("invalid try again\n");
+        if(found == 1) printf("invalid try again\n");
     }while(found == 1);
     int i = 0;
     while(Target[i].usrnm[0] > 0) i++; //get past used data;
     strcpy(Target[i].usrnm, temp);
-    scanf("%d", &Target[i].pswrd); //need to place restrictions
+    scanf("%s", Target[i].pswrd); //need to place restrictions
     scanf("%d %d %d", &Target[i].birth.mth, &Target[i].birth.dy, &Target[i].birth.yr);
 }
 void load(FILE * Source, user * Target){
     int i = 0;
-    while(!eof(Source)){
+    while(!feof(Source)){
         fread(Target,sizeof(user),1,Source);
+    }
+}
+void printUsers(user * Source){
+    int i = 0;
+    while (Source[i].usrnm[0] > 0) {
+        printf("%s\n", Source[i].usrnm);
+        printf("%s\n", Source[i].pswrd);
+        printf("%d %d %d\n", Source[i].birth.mth, Source[i].birth.dy, Source[i].birth.yr);
+        i++;
+    }
+}
+void updateFile(user * Source, FILE * Target){
+    int i = 0;
+    while(Source[i].usrnm[0] > 0){ //This is untested :)
+        fwrite(Source + i*sizeof(Source),sizeof(Source),1,Target);
+        i++;
     }
 }
 //struct Hash{
@@ -63,5 +77,12 @@ int main(){
     FILE * Data = fopen("/Users/Wu/Downloads/ONLYvalues.txt", "rb+");
     user Users[10];
     load(Data, Users);
-    char temp[10];
+    printUsers(Users);
+    for(int i = 0; i < 5;i++){
+        create(Users);
+    }
+    fclose(Data);
+    
+    Data = fopen("/Users/Wu/Downloads/ONLYvalues.txt", "wb+");
+    
 }
