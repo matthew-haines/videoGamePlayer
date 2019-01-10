@@ -48,8 +48,11 @@ int partition(user *ar, int l, int h){
 }
 
 int main() {
+    int i;
     user fle[101];
-
+    for(i=0; i<101; i++) fle[i].tpSc = 100-i;
+    qcksort(fle, 0, 100);
+    for(i=0; i<101; i++) printf("%d ", fle[i].tpSc);
 
     return 0;
 }
