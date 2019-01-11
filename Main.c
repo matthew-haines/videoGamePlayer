@@ -17,7 +17,8 @@ typedef struct {
     //dob birth;
     struct tm *t;
     int tpSc;
-    int fre;
+    int fre; //1 if spot is free, 0 if taken
+    int dys_old; //days old for comparison (not accurate)
 } user;
 
 int ask_add(){
