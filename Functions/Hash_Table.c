@@ -36,11 +36,14 @@ void create(user * Target){
         printf("Enter Username:");
         scanf("%s", temp);
         found = search(Target, temp);
-        if(found == 1) printf("invalid try again\n");
+        len = strlen(temp);
+        if(found == 1) printf("User Name Taken, try again\n");
+        if(len > 8) printf("Please make a name lower than 8 characters in length\n");
     }while(found == 1);
     int i = 0;
     while(Target[i].usrnm[0] > 0) i++; //get past used data;
     strcpy(Target[i].usrnm, temp);
+    
     scanf("%s", Target[i].pswrd); //need to place restrictions
     scanf("%d %d %d", &Target[i].birth.mth, &Target[i].birth.dy, &Target[i].birth.yr);
 }
@@ -48,7 +51,7 @@ void create(user * Target){
 void load(FILE * Source, user * Target){
     int i = 0;
     while(!feof(Source)){
-        fread(&(Target[i]),sizeof(user),1,Source);
+        fread(&(Target[i]),sizeof(user),1,Source); //reading
         i++;
     }
 }
@@ -70,13 +73,13 @@ void updateFile(user * Source, FILE * Target){ //write database
 //struct Hash{
 //    size_t data;
 //    size_t key;
-//};
+//};git 
 //size_t hashCode(size_t key){
 //    return key;
 //}
 
 int main(){
-    FILE * Data = fopen("/Users/Wu/Downloads/ONLYvalues.txt", "rb+");
+    FILE * Data = fopen("/Users/Wu/Downloads/ONLYvalues.txt", "rb+"); //This was my file :) change it up when you use it :)
     user Users[10];
     load(Data, Users);
     printUsers(Users);

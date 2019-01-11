@@ -30,7 +30,7 @@ int chck(user *fle, char nm[]){ //Slow algorithm for checking duplicate user nam
     int i, j;
     for(i=0; i<101; i++){
         j = 0;
-        while(nm[j++] == fle[i].usrnm[j++] && nm[j] != 0);
+        while(nm[j] == fle[i].usrnm[j] && nm[j] != 0) j++;
         if(nm[j] == 0 && fle[i].usrnm[j]==0) return 0;
     }
     return 1;
@@ -53,7 +53,7 @@ void add_rand(user *fle, int to_add){
             f = chck(fle, name);
         }while(f==0);
         for(j=0; j<100; j++){
-            if(fle.fre==0){
+            if(fle->fre==0){
                 strcpy(fle[j].usrnm, name);
                 break;
             }
@@ -63,7 +63,8 @@ void add_rand(user *fle, int to_add){
 
 int main() {
     user fle[101];
+    FILE * UserData;
     srand(time(NULL));
-
+    printf("Hello World\n");
     return 0;
 }
