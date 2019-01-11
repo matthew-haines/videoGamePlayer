@@ -21,13 +21,14 @@ typedef struct {
 
 int f_age(dte cur, user p){ //finding age in days
     int age = 0;
-    if(cur.mnth*30+cur.dy-p.birth.mnth*30-p.birth.dy >= 0) age += cur.mnth*30+cur.dy-p.birth.mnth*30-p.birth.dy;
+    if(age += (cur.mnth-1)*31+cur.dy-(p.birth.mnth-1)*31-p.birth.dy >= 0) age += (cur.mnth-1)*31+cur.dy-(p.birth.mnth-1)*31-p.birth.dy;
     else{
-        age += -cur.mnth*30-cur.dy+p.birth.mnth*30+p.birth.dy;
+        age += -((cur.mnth-1)*31+cur.dy-(p.birth.mnth-1)*31-p.birth.dy);
         cur.yr -= 1;
     }
 
     age += 365*(cur.yr-p.birth.yr);
+    printf("%d %d %d: %d %d %d: %d", cur.yr, cur.mnth, cur.dy, p.birth.yr, p.birth.mnth, p.birth.dy, age);
     return age;
 }
 
@@ -41,10 +42,10 @@ dte cur(){ //current date
 
 int main() {
      user p;
-     p.birth = (dte){1, 1, 2019};
+     p.birth = (dte){10, 2, 2018};
      dte d = cur();
 
-    printf("%d", f_age(d, p));
+    f_age(d, p);
 
     return 0;
 }
