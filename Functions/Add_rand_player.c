@@ -5,18 +5,20 @@
 #include <time.h>
 
 typedef struct {
-    int mth;
+    int mnth;
     int dy;
     int yr;
-} dob;
+} dte;
 
 typedef struct {
     char usrnm[10];
     int pswrd;
     double salt;
-    dob birth;
+    //dob birth;
+    struct tm *t;
     int tpSc;
-    int fre;
+    int fre; //1 if spot is free, 0 if taken
+    int dys_old; //days old for comparison (not accurate)
 } user;
 
 int ask_add(){
