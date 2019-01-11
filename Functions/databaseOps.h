@@ -51,11 +51,11 @@ int checkTaken(char * username, user * users) {
 }
 
 void addUser(user newUser, user * users) {
-    strncpy(users[*userCount].username, newUser.username, 16);
-    users[*userCount].password = newUser.password;
-    users[*userCount].salt = newUser.salt;
-    users[*userCount].dob = newUser.dob;
-    users[*userCount].topScore = newUser.topScore;
+    strncpy(users[userCount].username, newUser.username, 16);
+    users[userCount].password = newUser.password;
+    users[userCount].salt = newUser.salt;
+    users[userCount].dob = newUser.dob;
+    users[userCount].topScore = newUser.topScore;
     userCount++;
 }
 #endif
