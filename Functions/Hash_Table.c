@@ -27,6 +27,7 @@ int search(user * Target, char * Find){ //Search for specified username 0 is not
     }
     return 0;
 }
+
 void create(user * Target){
     int found;
     int len;
@@ -43,12 +44,15 @@ void create(user * Target){
     scanf("%s", Target[i].pswrd); //need to place restrictions
     scanf("%d %d %d", &Target[i].birth.mth, &Target[i].birth.dy, &Target[i].birth.yr);
 }
+
 void load(FILE * Source, user * Target){
     int i = 0;
     while(!feof(Source)){
-        fread(Target,sizeof(user),1,Source);
+        fread(&(Target[i]),sizeof(user),1,Source);
+        i++;
     }
 }
+
 void printUsers(user * Source){
     int i = 0;
     while (Source[i].usrnm[0] > 0) {
@@ -58,13 +62,11 @@ void printUsers(user * Source){
         i++;
     }
 }
-void updateFile(user * Source, FILE * Target){
-    int i = 0;
-    while(Source[i].usrnm[0] > 0){ //This is untested :)
-        fwrite(Source + i*sizeof(Source),sizeof(Source),1,Target);
-        i++;
-    }
+
+void updateFile(user * Source, FILE * Target){ //write database
+        fwrite(Source,sizeof(user),sizeof(Source),Target);
 }
+
 //struct Hash{
 //    size_t data;
 //    size_t key;
@@ -78,11 +80,12 @@ int main(){
     user Users[10];
     load(Data, Users);
     printUsers(Users);
-    for(int i = 0; i < 5;i++){
+    for(int i = 0; i < 3;i++){
         create(Users);
     }
     fclose(Data);
     
     Data = fopen("/Users/Wu/Downloads/ONLYvalues.txt", "wb+");
-    
+    updateFile(Users,Data);
+    fclose(Data);
 }
