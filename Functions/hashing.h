@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <stdint.h>
 #include <string.h>
+#include "general.h"
 /* Secure Storage Algorithm
 * 
 * Each time a new user is made, generate a salt (random sequence of characters)
@@ -18,25 +20,6 @@
 */
 #ifndef HASHING_H_
 #define HASHING_H_
-
-typedef struct {
-    int month;
-    int day;
-    int year;
-} dob;
-
-typedef struct {
-    char username[16];
-    int password;
-    float salt;
-    dob birth;
-    int topScore;
-} user;
-
-int r(int min, int max){
-	// go online to determine what the rand function does
-	return rand()%(max-min+1) + min;
-}
 
 void generate_salt(char * target, int salt_len) {
 	// 8 Char salt

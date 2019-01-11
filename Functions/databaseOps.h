@@ -1,10 +1,11 @@
 #include "hashing.h"
-#include "string.h"
+#include "general.h"
+#include <string.h>
 
 #ifndef DATABASEOPS_H_
 #define DATABASEOPS_H_
 
-void writeDB(user * users, int userCount) {
+void writeDB(user * users) {
     // Writes array of users to file
 	FILE *dbfile;
 	dbfile = fopen("playerDB.txt", "w+");
@@ -12,8 +13,8 @@ void writeDB(user * users, int userCount) {
 	for (int i = 0; i < userCount; i++) {
 	    fprintf(dbfile, "%s %d %f %d %d %d %d\n", 
 			users[i].username, users[i].password, 
-			users[i].salt, users[i].birth.month, 
-			users[i].birth.day, users[i].birth.year, 
+			users[i].salt, users[i].dob.day,
+            users[i].dob.month, users[i].dob.year, 
 			users[i].topScore);
 	}
     fclose(dbfile);
@@ -24,30 +25,37 @@ int loadDB(user * users) {
 	FILE *dbfile;
     printf("Reading from DB...\n");
 	dbfile = fopen("playerDB.txt", "r");
-    int userCount;
-    fscanf(dbfile, "%d\n", &userCount);
-    printf("%d users found\n", userCount);
-	for (int i = 0; i < userCount; i++) {
-		fscanf(dbfile, "%s %d %f %d %d %d %d\n", 
-			&users[i].username, &users[i].password, 
-			&users[i].salt, &users[i].birth.month, 
-			&users[i].birth.day, &users[i].birth.year, 
-			&users[i].topScore); 
-	}
-    fclose(dbfile);
-    return userCount;
+    if (dbfile) { // Checks if file exists
+        fscanf(dbfile, "%d\n", &userCount);
+        printf("%d users found\n", userCount);
+        for (int i = 0; i < userCount; i++) {
+            fscanf(dbfile, "%s %d %f %d %d %d %d\n", 
+                &users[i].username, &users[i].password, 
+                &users[i].salt, &users[i].dob.day, 
+                &users[i].dob.month, &users[i].dob.year, 
+                &users[i].topScore); 
+        }
+        fclose(dbfile);
+        return userCount;
+    }
+    else {
+        return -1;
+    }
 }
 
-int checkTaken(char * username, user * users, int userCount) {
+int checkTaken(char * username, user * users) {
     for (int i = 0; i < userCount; i++) {
         if (strncmp(username, users[i].username, 16)) return 1;
     }
     return 0;
 }
 
-int addUser(user newUser, user * users, int userCount) {
-    strncpy(users[userCount].username, newUser.username, 16);
-    users[userCount].password = newUser.password;
-    users[userCount].salt = newUser.salt;
+void addUser(user newUser, user * users) {
+    strncpy(users[*userCount].username, newUser.username, 16);
+    users[*userCount].password = newUser.password;
+    users[*userCount].salt = newUser.salt;
+    users[*userCount].dob = newUser.dob;
+    users[*userCount].topScore = newUser.topScore;
+    userCount++;
 }
 #endif
