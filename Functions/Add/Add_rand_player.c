@@ -14,8 +14,7 @@ typedef struct {
     char usrnm[10];
     int pswrd;
     double salt;
-    //dob birth;
-    struct tm *t;
+    dte birth;
     int tpSc;
     int fre; //1 if spot is free, 0 if taken
     int dys_old; //days old for comparison (not accurate)
@@ -28,7 +27,7 @@ int ask_add(){
     return num;
 }
 
-int chck(user *fle, char nm[]){ //Slow algorithm for checking duplicate user names
+int chck_name(user *fle, char nm[]){ //Slow algorithm for checking duplicate user names
     int i, j;
     for(i=0; i<101; i++){
         j = 0;
@@ -52,7 +51,7 @@ void add_rand(user *fle, int to_add){
                 else name[j] = rand()%26+97;
             }
             name[j]=0;
-            f = chck(fle, name);
+            f = chck_name(fle, name);
         }while(f==0);
         for(j=0; j<100; j++){
             if(fle->fre==0){
