@@ -19,7 +19,7 @@ typedef struct {
     char usrnm[10];
     int pswrd;
     double salt;
-    dob birth;
+    dte birth;
     int tpSc;
     int fre; //1 if spot is free, 0 if taken
     int dys_old; //days old for comparison (not accurate)
@@ -27,40 +27,35 @@ typedef struct {
 
 void usrnm_qcksort(user *ar, int l, int h){
     if(l<h){
-        int pvt = partition(ar, l, h);
-        qcksort(ar, l, pvt-1);
-        qcksort(ar, pvt+1, h);
+        int pvt = usrnm_partition(ar, l, h);
+        usrnm_qcksort(ar, l, pvt-1);
+        usrnm_qcksort(ar, pvt+1, h);
     }
 }
 int usrnm_partition(user *ar, int l, int h){
     int i = l;
     int j;
-    char temp[10];
+    user temp;
     int n;
 
     for(j=l; j<h; j++){
         n = strcmp(ar[j].usrnm, ar[h].usrnm);
         if(n < 0){
-            strcpy(temp, ar[i].usrnm);
-            strcpy(ar[i].usrnm, ar[j].usrnm);
-            strcpy(ar[j].usrnm, temp);
+            temp = ar[i];
+            ar[i] = ar[j];
+            ar[j] = temp;
             i++;
         }
     }
 
-    strcpy(temp, ar[i].usrnm);
-    strcpy(ar[i].usrnm, ar[h].usrnm);
-    strcpy(ar[h].usrm, temp);
+    temp = ar[i];
+    ar[i] = ar[h];
+    ar[h] = temp;
 
     return i;
 }
 
 int main() {
-    int i;
-    user fle[101];
-    for(i=0; i<101; i++) fle[i].tpSc = 100-i;
-    qcksort(fle, 0, 100);
-    for(i=0; i<101; i++) printf("%d ", fle[i].tpSc);
 
     return 0;
 }
