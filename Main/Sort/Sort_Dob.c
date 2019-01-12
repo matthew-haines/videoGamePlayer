@@ -19,14 +19,14 @@ typedef struct {
     char usrnm[10];
     int pswrd;
     double salt;
-    dob birth;
+    dte birth;
     int tpSc;
     int fre; //1 if spot is free, 0 if taken
     int dys_old; //days old for comparison (not accurate)
 } user;
 
 int f_age(user p){ //finding age in days; works don't touch
-    dte today = cur();
+    dte today;
     int age = 0;
     if(age += (today.mnth-1)*31+today.dy-(p.birth.mnth-1)*31-p.birth.dy >= 0) age += (today.mnth-1)*31+today.dy-(p.birth.mnth-1)*31-p.birth.dy;
     else{
@@ -63,38 +63,33 @@ void age_user_ar(int *ar, user *fle, int n){ //Calculates age of user
 
 void dob_qcksort(user *ar, int l, int h){
     if(l<h){
-        int pvt = partition(ar, l, h);
-        qcksort(ar, l, pvt-1);
-        qcksort(ar, pvt+1, h);
+        int pvt = dob_partition(ar, l, h);
+        dob_qcksort(ar, l, pvt-1);
+        dob_qcksort(ar, pvt+1, h);
     }
 }
 int dob_partition(user *ar, int l, int h){
     int i = l;
     int j;
-    int temp;
+    user temp;
 
     for(j=l; j<h; j++){
         if(ar[j].dys_old<=ar[h].dys_old){
-            temp = ar[i].dys_old;
-            ar[i].dys_old = ar[j];
-            ar[j].dys_old = temp;
+            temp = ar[i];
+            ar[i] = ar[j];
+            ar[j] = temp;
             i++;
         }
     }
 
-    temp = ar[i].dys_old;
-    ar[i].dys_old = ar[h].dys_old;
-    ar[h].dys_old = temp;
+    temp = ar[i];
+    ar[i] = ar[h];
+    ar[h] = temp;
 
     return i;
 }
 
 int main() {
-     user p;
-     p.birth = (dte){10, 2, 2018};
-     dte d = cur();
-
-    f_age(d, p);
 
     return 0;
 }
