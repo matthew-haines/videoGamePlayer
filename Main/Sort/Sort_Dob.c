@@ -4,6 +4,11 @@
 #include <string.h>
 #include <time.h>
 
+/***
+    Should be done
+    Not tested
+***/
+
 typedef struct {
     int mnth;
     int dy;
@@ -14,10 +19,10 @@ typedef struct {
     char usrnm[10];
     int pswrd;
     double salt;
-    dte birth;
+    dob birth;
     int tpSc;
-    int fre;
-    int dys_old; //in days (not accurate but used for comparison)
+    int fre; //1 if spot is free, 0 if taken
+    int dys_old; //days old for comparison (not accurate)
 } user;
 
 int f_age(user p){ //finding age in days; works don't touch
@@ -42,35 +47,44 @@ dte cur(){ //current date
     return (dte){t->tm_mon+1, t->tm_mday, t->tm_year+1900};
 }
 
-void srt_dob(int *srted_dob, user *fle, int n){ //TO DO: Merge with quick sort, figure out data structure for storage
+void age_user_ar(int *ar, user *fle, int n){ //Calculates age of user
     int i;
-    for(i=0; i<n; i++) srted_dob[i] = f_age();
+    for(i=0; i<n; i++) fle[i].dys_old = f_age(fle[i]);
 }
 
-void qcksort(user *ar, int l, int h){
+/*void user_ar(int num, int *ar, user *f, int n){ //Creating an extra array for age or top Score for sorting, no point in doing this
+    int i;
+    if(num==0){
+        for(i=0; i<n; i++) ar[i] = f[i].dys_old;
+    }else{
+        for(i=0; i<n; i++) ar[i] = f[i].tpSc;
+    }
+}*/
+
+void dob_qcksort(user *ar, int l, int h){
     if(l<h){
         int pvt = partition(ar, l, h);
         qcksort(ar, l, pvt-1);
         qcksort(ar, pvt+1, h);
     }
 }
-int partition(user *ar, int l, int h){
+int dob_partition(user *ar, int l, int h){
     int i = l;
     int j;
     int temp;
 
     for(j=l; j<h; j++){
-        if(ar[j].tpSc<=ar[h].tpSc){ //enumerate the elements for more versatility
-            temp = ar[i].tpSc;
-            ar[i].tpSc = ar[j].tpSc;
-            ar[j].tpSc = temp;
+        if(ar[j].dys_old<=ar[h].dys_old){
+            temp = ar[i].dys_old;
+            ar[i].dys_old = ar[j];
+            ar[j].dys_old = temp;
             i++;
         }
     }
 
-    temp = ar[i].tpSc;
-    ar[i].tpSc = ar[h].tpSc;
-    ar[h].tpSc = temp;
+    temp = ar[i].dys_old;
+    ar[i].dys_old = ar[h].dys_old;
+    ar[h].dys_old = temp;
 
     return i;
 }
