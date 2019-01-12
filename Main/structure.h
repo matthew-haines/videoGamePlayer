@@ -6,7 +6,7 @@ typedef struct {
 
 typedef struct {
     char usrnm[10];
-    int pswrd;
+    char pswrd[10];
     double salt;
     dte birth;
     int tpSc;
