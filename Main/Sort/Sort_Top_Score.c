@@ -4,11 +4,16 @@
 #include <string.h>
 #include <time.h>
 
+/***
+    Should be done
+    Not tested
+***/
+
 typedef struct {
-    int mth;
+    int mnth;
     int dy;
     int yr;
-} dob;
+} dte;
 
 typedef struct {
     char usrnm[10];
@@ -16,17 +21,18 @@ typedef struct {
     double salt;
     dob birth;
     int tpSc;
-    int fre;
+    int fre; //1 if spot is free, 0 if taken
+    int dys_old; //days old for comparison (not accurate)
 } user;
 
-void qcksort(user *ar, int l, int h){
+void ts_qcksort(user *ar, int l, int h){
     if(l<h){
         int pvt = partition(ar, l, h);
         qcksort(ar, l, pvt-1);
         qcksort(ar, pvt+1, h);
     }
 }
-int partition(user *ar, int l, int h){
+int ts_partition(user *ar, int l, int h){
     int i = l;
     int j;
     int temp;
