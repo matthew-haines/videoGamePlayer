@@ -14,13 +14,13 @@ Input:
     strcpy(p[9].usrnm, "ba");
 
 Output:
-a
-aaa
-ab
-aba
-abc
-abd
-b
-ba
-baa
-ca
+a 5
+aaa 7
+ab 2
+aba 8
+abc 1
+abd 4
+b 3
+ba 9
+baa 0
+ca 6
