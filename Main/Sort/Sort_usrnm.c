@@ -6,7 +6,7 @@
 
 /***
     Should be done
-    Not tested
+    Test 1 Passed
 ***/
 
 typedef struct {
@@ -56,6 +56,23 @@ int usrnm_partition(user *ar, int l, int h){
 }
 
 int main() {
+    int i;
+    user p[10];
+    for(i=0; i<10; i++) p[i].fre = i;
+    strcpy(p[0].usrnm, "baa");
+    strcpy(p[1].usrnm, "abc");
+    strcpy(p[2].usrnm, "ab");
+    strcpy(p[3].usrnm, "b");
+    strcpy(p[4].usrnm, "abd");
+    strcpy(p[5].usrnm, "a");
+    strcpy(p[6].usrnm, "ca");
+    strcpy(p[7].usrnm, "aaa");
+    strcpy(p[8].usrnm, "aba");
+    strcpy(p[9].usrnm, "ba");
+
+    usrnm_qcksort(p, 0, 9);
+
+    for(i=0; i<10; i++) printf("%s %d\n", p[i].usrnm, p[i].fre);
 
     return 0;
 }
