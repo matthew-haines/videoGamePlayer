@@ -4,6 +4,12 @@
 #include <string.h>
 #include <time.h>
 #define MAX_N 100
+#define MAX_TPSC 500000
+
+/***
+    Works?
+    May be a bug, but can't reproduce it.
+***/
 
 typedef struct {
     int mnth;
@@ -13,7 +19,7 @@ typedef struct {
 
 typedef struct {
     char usrnm[10];
-    int pswrd;
+    char pswrd[10];
     double salt;
     dte birth;
     int tpSc;
@@ -30,7 +36,7 @@ int ask_add(){
 
 int chck_name(user *fle, char nm[]){ //Slow algorithm for checking duplicate user names
     int i, j;
-    for(i=0; i<101; i++){
+    for(i=0; i<=MAX_N; i++){
         j = 0;
         while(nm[j] == fle[i].usrnm[j] && nm[j] != 0) j++;
         if(nm[j] == 0 && fle[i].usrnm[j]==0) return 0;
@@ -38,11 +44,11 @@ int chck_name(user *fle, char nm[]){ //Slow algorithm for checking duplicate use
     return 1;
 }
 
-void add_rand_name(user *fle, user *p){
+void add_rand_name(user *fle, user *p, int sd){
     int i, j, lngth, alph, f;
-    srand(time(NULL));
+    srand(sd);
     lngth = rand()%3+6;
-    f = 0;
+
     char name[lngth+1];
     do{
         for(j=0; j<lngth; j++){
@@ -56,9 +62,10 @@ void add_rand_name(user *fle, user *p){
     strcpy(p->usrnm, name);
 }
 
-void add_pswrd(user *p){
-    srand(time(NULL));
+void add_pswrd(user *p, int sd){
+    srand(sd);
     int tp; //0 for digit, 1 for lower case, 2 for upper case
+    int lngth, i;
     lngth = rand()%6+5;
     char password[lngth];
     for(i=0; i<lngth; i++){
@@ -71,20 +78,20 @@ void add_pswrd(user *p){
     strcpy(p->pswrd, password);
 }
 
-void add_tpSc(user *p){
-    srand(time(NULL));
-    p->tpSc = rand()%500001;
+void add_tpSc(user *p, int sd){
+    srand(sd);
+    p->tpSc = rand()%(MAX_TPSC+1);
 }
 
-void add_dob(user *p){
-    srand(time(NULL));
+void add_dob(user *p, int sd){
+    srand(sd);
     int i;
     int ar[6] = {1, 3, 5, 7, 8, 10, 12};
     p->birth.yr = rand()%21+1990;
     p->birth.mnth = rand()%12+1;
     p->birth.dy = 0;
     for(i=0; i<6; i++){
-        if(mp->birth.mnth == ar[i]) p->birth.dy = -1;
+        if(p->birth.mnth == ar[i]) p->birth.dy = -1;
     }
     if(p->birth.dy==-1) p->birth.dy = rand()%31+1;
     else if(p->birth.mnth==2 && p->birth.yr%4==0) p->birth.dy = rand()%29+1;
@@ -94,23 +101,31 @@ void add_dob(user *p){
 
 void add(user *fle){
     int i, j;
+    int chk = 0;
+    int sd;
+    srand(time(NULL));
     int n = ask_add();
     for(i=0; i<n; i++){
-        for(j=i; j<MAX_N; j++){
+        chk = 0;
+        for(j=i; j<MAX_N && chk == 0; j++){
             if(fle[j].fre==0){
-                add_rand_name(fle, &fle[j]);
-                add_pswrd(&fle[j]);
-                add_tpSc(&fle[j]);
-                add_dob(&fle[j]);
+                sd = rand();
+                add_rand_name(fle, &fle[j], sd);
+                //printf("%s\n", fle[j].usrnm);
+                add_pswrd(&fle[j], sd); //WORKS
+                //printf("%s\n", fle[j].pswrd);
+                add_tpSc(&fle[j], sd); //WORKS
+                //printf("%d ", fle[j].tpSc);
+                add_dob(&fle[j], sd);
+                printf("%s, %s, %d, %d\\%d\\%d\n", fle[j].usrnm, fle[j].pswrd, fle[j].tpSc, fle[j].birth.mnth, fle[j].birth.dy, fle[j].birth.yr);
+                chk = 1;
             }
         }
     }
 }
 
 int main() {
-    user fle[101];
-    FILE * UserData;
-    srand(time(NULL));
-    printf("Hello World\n");
+    user p[MAX_N+1];
+    add(p);
     return 0;
 }
