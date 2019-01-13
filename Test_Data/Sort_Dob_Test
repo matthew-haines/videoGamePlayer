@@ -3,25 +3,25 @@ Input:
     int i;
     user p[10];
     for(i=0; i<10; i++) p[i].fre = i;
-    p[0].birth.y
-    strcpy(p[1].usrnm, "abc");
-    strcpy(p[2].usrnm, "ab");
-    strcpy(p[3].usrnm, "b");
-    strcpy(p[4].usrnm, "abd");
-    strcpy(p[5].usrnm, "a");
-    strcpy(p[6].usrnm, "ca");
-    strcpy(p[7].usrnm, "aaa");
-    strcpy(p[8].usrnm, "aba");
-    strcpy(p[9].usrnm, "ba");
+    p[0].birth = (dte){6, 20, 1995);
+    p[1].birth = (dte){4, 4, 2002);
+    p[2].birth = (dte){1, 1, 1991);
+    p[3].birth = (dte){12, 31, 1990);
+    p[4].birth = (dte){2, 29, 2000);
+    p[5].birth = (dte){11, 4, 2014);
+    p[6].birth = (dte){1, 1, 1991);
+    p[7].birth = (dte){6, 19, 1995);
+    p[8].birth = (dte){5, 10, 1994);
+    p[9].birth = (dte){12, 12, 1992);
 
 Output:
-a 5
-aaa 7
-ab 2
-aba 8
-abc 1
-abd 4
-b 3
-ba 9
-baa 0
-ca 6
+3
+2
+6
+9
+8
+7
+0
+4
+1
+5
