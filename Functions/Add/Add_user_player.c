@@ -32,33 +32,103 @@ int chck_name(user *fle, char nm[]){ //Slow algorithm for checking duplicate use
     return 1;
 }
 
-void add_user_player(user *fle){
-    char usrnm[10];
+int get_yr(){
+    int num;
+    printf("Please enter the year:\n");
+    do{
+        scanf(" %d", &num);
+        if(num < 1990 || num > 2010) printf("Year is invalid. Please try again.\n");
+    }while(num < 1990 || num > 2010);
+    return num;
+}
+
+int get_mnth(){
+    int num;
+    printf("Please enter the month:\n");
+    do{
+        scanf(" %d", &num);
+        if(num < 1 && num > 12) printf("Year is invalid. Please try again.\n");
+    }while(num < 1 && num > 12);
+    return num;
+}
+
+int get_day(int yr, int mnth){
+    int lng[6] = {1, 3, 5, 7, 8, 10, 12};
+    int i;
+    int dy;
+    int chk = 30;
+    for(i=0; i<6; i++){
+        if(mnth == lng[i]) chk = 31;
+    }
+    if(mnth == 2){
+        if(yr % 4 == 0) chk = 29;
+        else chk = 28;
+    }
+
+    printf("Please enter the day:\n");
+
+    do{
+        scanf(" %d", &dy);
+        if(dy < 1 || dy > chk) printf("Date is invalid. Please try again.\n");
+    }while(dy < 1 || dy > chk);
+    return dy;
+}
+
+void add_user_player(user *fle, user *p){
+    char name[10];
     char pswrd[10];
     char pswrd2[10];
-    int tpSc;
+    int topSc;
     dte dob;
     int chk = 0;
 
     do{
+        chk = 1;
         printf("Enter username:");
-        scanf(" %s", usrnm);
-        chk = chck_name(fle, usrnm);
-    }while(chk==1);
-
+        scanf(" %s", name);
+        if(chck_name(fle, name)==0){
+            chk = 0;
+            printf("Username taken. Please try again.\n");
+        }else if(strlen(name)<6){
+            chk = 0;
+            printf("Username too short. Please try again.\n");
+        }else if(strlen(name > 10)){
+            chk = 0;
+            printf("Username too long. Please try again.\n");
+        }
+    }while(chk==0);
+    strcmp(p->usrnm, name);
 
     do{
         printf("Enter password:");
         scanf(" %s", pswrd);
         printf("Enter password again:");
         scanf(" %s", pswrd2);
-        chk = strcmp(pswrd, pswrd2);
-    }while(chk==0);
 
-    printf("Enter Top Score:");
-    scanf(" %d", &tpSc);
+        if(strlen(pswrd) < 5){
+            chk = 1;
+            printf("Password is too short. Please try again.\n");
+        }else if(strlen(pswrd) > 10){
+            chk = 1;
+            printf("Password is too long. Please try again.\n");
+        }else if(strcmp(pswrd, pswrd2) != 0){
+            chk = 1;
+            printf("Password do not match. Please try again.\n");
+        }
+    }while(chk!=0);
+    strcmp(p->pswrd, psrwd);
 
-    printf("Enter Date of Birth\nMonth:%d\nDay:%d\nYear:%d.", dob.mnth, dob.dy, dob.yr);
+    do{
+        printf("Enter Top Score:");
+        scanf(" %d", &topSc);
+        if(topSc < 0) printf("Score is negative. Please try again.\n");
+        else if(topSc > 500000) printf("Score is too high. Please try again.\n");
+    }while(topSc < 0 || topSc > 500000);
+    p->tpSc = topSc;
+
+    p->birth.yr = get_yr();
+    p->birth.mnth = get_mnth();
+    p->birth.dy = get_day(p->birth.yr, p->birth.mnth);
 
     /***
         STILL NEED TO ADD TO DATABASE. WHERE??

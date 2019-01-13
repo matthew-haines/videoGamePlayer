@@ -88,6 +88,7 @@ void add_dob(user *p){
     }
     if(p->birth.dy==-1) p->birth.dy = rand()%31+1;
     else if(p->birth.mnth==2 && p->birth.yr%4==0) p->birth.dy = rand()%29+1;
+    else if(p->birth.mnth == 2) p->birth.dy = rand()%28+1;
     else p->birth.dy = rand()%30+1;
 }
 
