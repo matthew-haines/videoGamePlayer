@@ -1,1 +1,26 @@
+Input:
+user p[10];
+for(i=0; i<10; i++) p[i].fre = i;
+p[0].usrnm = "baa";
+p[1].usrnm = "abc";
+p[2].usrnm = "ab";
+p[3].usrnm = "b";
+p[4].usrnm = "abd";
+p[5].usrnm = "a";
+p[6].usrnm = "ca";
+p[7].usrnm = "aaa";
+p[8].usrnm = "aba";
+p[9].usrnm = "ba";
 
+
+Output:
+a
+aaa
+ab
+aba
+abc
+abd
+b
+ba
+baa
+ca
