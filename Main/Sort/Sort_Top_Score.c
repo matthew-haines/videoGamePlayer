@@ -6,7 +6,7 @@
 
 /***
     Should be done
-    Not tested
+    Test 1 Passed
 ***/
 
 typedef struct {
@@ -38,7 +38,7 @@ int ts_partition(user *ar, int l, int h){
     user temp;
 
     for(j=l; j<h; j++){
-        if(ar[j].tpSc<=ar[h].tpSc){
+        if(ar[j].tpSc>=ar[h].tpSc){
             temp = ar[i];
             ar[i] = ar[j];
             ar[j] = temp;
@@ -54,6 +54,20 @@ int ts_partition(user *ar, int l, int h){
 }
 
 int main(){
-
+    int i;
+    user p[10];
+    for(i=0; i<10; i++) p[i].fre = i;
+    p[0].tpSc = 5;
+    p[1].tpSc = 3;
+    p[2].tpSc = 8;
+    p[3].tpSc = 2;
+    p[4].tpSc = 9;
+    p[5].tpSc = 6;
+    p[6].tpSc = 7;
+    p[7].tpSc = 1;
+    p[8].tpSc = 10;
+    p[9].tpSc = 4;
+    ts_qcksort(p, 0, 9);
+    for(i=0; i<10; i++) printf("%d %d\n", p[i].tpSc, p[i].fre);
     return 0;
 }
