@@ -1,17 +1,17 @@
 Input:
-user p[10];
-for(i=0; i<10; i++) p[i].fre = i;
-p[0].usrnm = "baa";
-p[1].usrnm = "abc";
-p[2].usrnm = "ab";
-p[3].usrnm = "b";
-p[4].usrnm = "abd";
-p[5].usrnm = "a";
-p[6].usrnm = "ca";
-p[7].usrnm = "aaa";
-p[8].usrnm = "aba";
-p[9].usrnm = "ba";
-
+    int i;
+    user p[10];
+    for(i=0; i<10; i++) p[i].fre = i;
+    strcpy(p[0].usrnm, "baa");
+    strcpy(p[1].usrnm, "abc");
+    strcpy(p[2].usrnm, "ab");
+    strcpy(p[3].usrnm, "b");
+    strcpy(p[4].usrnm, "abd");
+    strcpy(p[5].usrnm, "a");
+    strcpy(p[6].usrnm, "ca");
+    strcpy(p[7].usrnm, "aaa");
+    strcpy(p[8].usrnm, "aba");
+    strcpy(p[9].usrnm, "ba");
 
 Output:
 a
