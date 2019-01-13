@@ -1,0 +1,27 @@
+Test 1
+Input:
+    int i;
+    user p[10];
+    for(i=0; i<10; i++) p[i].fre = i;
+    p[0].tpSc = 5;
+    p[1].tpSc = 3;
+    p[2].tpSc = 8;
+    p[3].tpSc = 2;
+    p[4].tpSc = 9;
+    p[5].tpSc = 6;
+    p[6].tpSc = 7;
+    p[7].tpSc = 1;
+    p[8].tpSc = 10;
+    p[9].tpSc = 4;
+
+Output:
+10 8
+9 4
+8 2
+7 6
+6 5
+5 0
+4 9
+3 1
+2 3
+1 7
