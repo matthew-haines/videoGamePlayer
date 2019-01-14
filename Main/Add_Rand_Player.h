@@ -8,9 +8,9 @@ int ask_add(){
     return num;
 }
 
-int chck_name(user *fle, char nm[]){ //Slow algorithm for checking duplicate user names
+int chck_name(user *fle, char nm[], int n){ //Slow algorithm for checking duplicate user names
     int i, j;
-    for(i=0; i<=MAX_N; i++){
+    for(i=0; i<n; i++){
         j = 0;
         while(nm[j] == fle[i].usrnm[j] && nm[j] != 0) j++;
         if(nm[j] == 0 && fle[i].usrnm[j]==0) return 0;
@@ -18,7 +18,7 @@ int chck_name(user *fle, char nm[]){ //Slow algorithm for checking duplicate use
     return 1;
 }
 
-void add_rand_name(user *fle, user *p, int sd){
+void add_rand_name(user *fle, user *p, int sd, int n){
     int i, j, lngth, alph, f;
     srand(sd);
     lngth = rand()%3+6;
@@ -31,7 +31,7 @@ void add_rand_name(user *fle, user *p, int sd){
             else name[j] = rand()%26+97;
         }
         name[j]=0;
-        f = chck_name(fle, name);
+        f = chck_name(fle, name, n);
     }while(f==0);
     strcpy(p->usrnm, name);
 }
@@ -79,12 +79,13 @@ void add(user *fle){
     int sd;
     srand(time(NULL));
     int n = ask_add();
+    int num; //Number of players in db so far
     for(i=0; i<n; i++){
         chk = 0;
         for(j=i; j<MAX_N && chk == 0; j++){
             if(fle[j].fre==0){
                 sd = rand();
-                add_rand_name(fle, &fle[j], sd);
+                add_rand_name(fle, &fle[j], sd, num);
                 //printf("%s\n", fle[j].usrnm);
                 add_pswrd(&fle[j], sd); //WORKS
                 //printf("%s\n", fle[j].pswrd);

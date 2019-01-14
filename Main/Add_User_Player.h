@@ -1,13 +1,3 @@
-int chck_name(user *fle, char nm[], int n){ //Slow algorithm for checking duplicate user names
-    int i, j;
-    for(i=0; i<n; i++){
-        j = 0;
-        while(nm[j] == fle[i].usrnm[j] && nm[j] != 0) j++;
-        if(nm[j] == 0 && fle[i].usrnm[j]==0) return 0;
-    }
-    return 1;
-}
-
 void get_yr(user *p){
     int num;
     printf("Please enter the year:\n");

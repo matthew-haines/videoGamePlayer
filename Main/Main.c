@@ -7,7 +7,8 @@
 #include "Sort_Dob.h"
 #include "Sort_Top_Score.h"
 #include "Sort_Username.h"
-#include "header.h" //placement name for function header
+#include "Add_Rand_Player.h"
+#include "Add_User_Player.h"
 
 int main() {
     return 0;
