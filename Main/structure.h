@@ -5,8 +5,8 @@ typedef struct {
 } dte;
 
 typedef struct {
-    char usrnm[10];
-    char pswrd[10];
+    char usrnm[20];
+    char pswrd[20];
     double salt;
     dte birth;
     int tpSc;
