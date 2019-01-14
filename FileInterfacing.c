@@ -5,16 +5,16 @@
 #include <time.h>
 
 typedef struct {
-    int mth;
+    int mnth;
     int dy;
     int yr;
-} dob;
+} dte;
 
 typedef struct {
-    char usrnm[10];
-    char pswrd[10];
+    char usrnm[20];
+    char pswrd[20];
     double salt;
-    dob birth;
+    dte birth;
     int tpSc;
     int fre;
 } user;
@@ -45,7 +45,7 @@ void create(user * Target){
     strcpy(Target[i].usrnm, temp);
     
     scanf("%s", Target[i].pswrd); //need to place restrictions
-    scanf("%d %d %d", &Target[i].birth.mth, &Target[i].birth.dy, &Target[i].birth.yr);
+    scanf("%d %d %d", &Target[i].birth.mnth, &Target[i].birth.dy, &Target[i].birth.yr);
 }
 
 void load(FILE * Source, user * Target){
@@ -61,7 +61,7 @@ void printUsers(user * Source){
     while (Source[i].usrnm[0] > 0) {
         printf("%s\n", Source[i].usrnm);
         printf("%s\n", Source[i].pswrd);
-        printf("%d %d %d\n", Source[i].birth.mth, Source[i].birth.dy, Source[i].birth.yr);
+        printf("%d %d %d\n", Source[i].birth.mnth, Source[i].birth.dy, Source[i].birth.yr);
         i++;
     }
 }
