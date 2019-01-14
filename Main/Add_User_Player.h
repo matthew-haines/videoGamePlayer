@@ -102,18 +102,18 @@ void get_pswrd(user *p){
     strcmp(p->pswrd, pswrd);
 }
 
-void add_user_player(user *fle, user *p, int n){
+void add_user_player(user *fle, user *p, int *n){
     dte dob;
     int chk = 0;
 
-    //get_usrnm(fle, p, n); WORKS
-    n += 1;
-    //get_ts(p); //WORKS
-    //get_pswrd(p); //WORKS
+    get_usrnm(fle, p, n); //WORKS
+    *n += 1;
+    get_ts(p); //WORKS
+    get_pswrd(p); //WORKS
 
-    //get_yr(p);
-    //get_mnth(p);
-    //get_day(p->birth.yr, p->birth.mnth, p); //WORKS
+    get_yr(p);
+    get_mnth(p);
+    get_day(p->birth.yr, p->birth.mnth, p); //WORKS
 
     /***
         STILL NEED TO ADD TO DATABASE. WHERE??

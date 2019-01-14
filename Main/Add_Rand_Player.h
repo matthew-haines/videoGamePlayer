@@ -73,7 +73,7 @@ void add_dob(user *p, int sd){
     else p->birth.dy = rand()%30+1;
 }
 
-void add(user *fle){
+void add_rand_player(user *fle){
     int i, j;
     int chk = 0;
     int sd;

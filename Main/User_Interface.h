@@ -1,5 +1,5 @@
-void menu_options(){
-    int n;
+void menu_options(user *fle, int n){
+    int inpt;
     printf("Menu Options:\n1: Add random numbers."
 "\n2: Output Players.\n3: Add Player."
 "\n4: Delete Player by LoginID"
@@ -9,34 +9,35 @@ void menu_options(){
 "\n8: Sort Players by Top Score"
 "\n9: Find Players by LoginID"
 "\n10: Quit");
-    scanf(" %d", &n);
+    scanf(" %d", &inpt);
     switch(n){
         case 1:
-                add_rand();
+                add_rand_player(fle);
                 break;
         case 2:
-                output();
+                //output();
                 break;
         case 3:
-                add_u();
+                add_user_player(fle, &fle[n], n);
                 break;
         case 4:
-                del_id();
+                //del_id();
                 break;
         case 5:
-                del_ts();
+                //del_ts();
                 break;
         case 6:
-                sort_id();
+                usrnm_qcksort(fle, 0, n-1);
                 break;
         case 7:
-                sort_dob();
+                age_user_ar(fle, n);
+                dob_qcksort(fle, 0, n-1);
                 break;
         case 8:
-                sort_ts();
+                ts_qcksort(fle, 0, n-1);
                 break;
         case 9:
-                find_id();
+                //find_id();
                 break;
         case 10:
                 return;
