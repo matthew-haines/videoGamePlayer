@@ -16,7 +16,7 @@ void menu_options(){
 "\n9: Find Players by LoginID"
 "\n10: Quit");
     scanf(" %d", &n);
-    switch(n):
+    switch(n){
         case 1:
                 add_rand();
                 break;
@@ -48,6 +48,7 @@ void menu_options(){
                 return;
         default:
                 break;
+    }
 
 }
 
