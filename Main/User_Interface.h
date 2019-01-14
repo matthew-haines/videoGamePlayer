@@ -1,9 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include <time.h>
-
 void menu_options(){
     int n;
     printf("Menu Options:\n1: Add random numbers."
@@ -51,9 +45,3 @@ void menu_options(){
     }
 
 }
-
-int main() {
-
-    return 0;
-}
-
