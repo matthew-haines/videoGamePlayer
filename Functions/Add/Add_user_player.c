@@ -3,8 +3,11 @@
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
-#include "structure.h"
-#include "header.h" //placement name for function header
+
+/***
+    Works?
+    Needs more testing.
+***/
 
 typedef struct {
     int mnth;
@@ -12,9 +15,10 @@ typedef struct {
     int yr;
 } dte;
 
+
 typedef struct {
-    char usrnm[10];
-    int pswrd;
+    char usrnm[20];
+    char pswrd[20];
     double salt;
     dte birth;
     int tpSc;
@@ -22,9 +26,9 @@ typedef struct {
     int dys_old; //days old for comparison (not accurate)
 } user;
 
-int chck_name(user *fle, char nm[]){ //Slow algorithm for checking duplicate user names
+int chck_name(user *fle, char nm[], int n){ //Slow algorithm for checking duplicate user names
     int i, j;
-    for(i=0; i<101; i++){
+    for(i=0; i<n; i++){
         j = 0;
         while(nm[j] == fle[i].usrnm[j] && nm[j] != 0) j++;
         if(nm[j] == 0 && fle[i].usrnm[j]==0) return 0;
@@ -32,30 +36,30 @@ int chck_name(user *fle, char nm[]){ //Slow algorithm for checking duplicate use
     return 1;
 }
 
-int get_yr(){
+void get_yr(user *p){
     int num;
     printf("Please enter the year:\n");
     do{
         scanf(" %d", &num);
         if(num < 1990 || num > 2010) printf("Year is invalid. Please try again.\n");
     }while(num < 1990 || num > 2010);
-    return num;
+    p->birth.yr = num;
 }
 
-int get_mnth(){
+void get_mnth(user *p){
     int num;
     printf("Please enter the month:\n");
     do{
         scanf(" %d", &num);
         if(num < 1 && num > 12) printf("Year is invalid. Please try again.\n");
     }while(num < 1 && num > 12);
-    return num;
+    p->birth.mnth = num;
 }
 
-int get_day(int yr, int mnth){
-    int lng[6] = {1, 3, 5, 7, 8, 10, 12};
+void get_day(int yr, int mnth, user *p){
+    int lng[7] = {1, 3, 5, 7, 8, 10, 12};
     int i;
-    int dy;
+    int num;
     int chk = 30;
     for(i=0; i<6; i++){
         if(mnth == lng[i]) chk = 31;
@@ -68,56 +72,35 @@ int get_day(int yr, int mnth){
     printf("Please enter the day:\n");
 
     do{
-        scanf(" %d", &dy);
-        if(dy < 1 || dy > chk) printf("Date is invalid. Please try again.\n");
-    }while(dy < 1 || dy > chk);
-    return dy;
+        scanf(" %d", &num);
+        if(num < 1 || num > chk) printf("Date is invalid. Please try again.\n");
+    }while(num < 1 || num > chk);
+    p->birth.dy = num;
 }
 
-void add_user_player(user *fle, user *p){
-    char name[10];
-    char pswrd[10];
-    char pswrd2[10];
-    int topSc;
-    dte dob;
-    int chk = 0;
-
+void get_usrnm(user *fle, user *p, int n){
+    int chk;
+    char name[20];
     do{
         chk = 1;
-        printf("Enter username:");
+        printf("Enter name:\n");
         scanf(" %s", name);
-        if(chck_name(fle, name)==0){
+        if(chck_name(fle, name, n)==0){
             chk = 0;
             printf("Username taken. Please try again.\n");
         }else if(strlen(name)<6){
             chk = 0;
             printf("Username too short. Please try again.\n");
-        }else if(strlen(name > 10)){
+        }else if(strlen(name) > 10){
             chk = 0;
             printf("Username too long. Please try again.\n");
         }
     }while(chk==0);
     strcmp(p->usrnm, name);
+}
 
-    do{
-        printf("Enter password:");
-        scanf(" %s", pswrd);
-        printf("Enter password again:");
-        scanf(" %s", pswrd2);
-
-        if(strlen(pswrd) < 5){
-            chk = 1;
-            printf("Password is too short. Please try again.\n");
-        }else if(strlen(pswrd) > 10){
-            chk = 1;
-            printf("Password is too long. Please try again.\n");
-        }else if(strcmp(pswrd, pswrd2) != 0){
-            chk = 1;
-            printf("Password do not match. Please try again.\n");
-        }
-    }while(chk!=0);
-    strcmp(p->pswrd, psrwd);
-
+void get_ts(user *p){
+    int topSc;
     do{
         printf("Enter Top Score:");
         scanf(" %d", &topSc);
@@ -125,10 +108,50 @@ void add_user_player(user *fle, user *p){
         else if(topSc > 500000) printf("Score is too high. Please try again.\n");
     }while(topSc < 0 || topSc > 500000);
     p->tpSc = topSc;
+}
 
-    p->birth.yr = get_yr();
-    p->birth.mnth = get_mnth();
-    p->birth.dy = get_day(p->birth.yr, p->birth.mnth);
+void get_pswrd(user *p){
+    char pswrd[10];
+    char pswrd2[10];
+    int chk;
+    do{
+        chk = 0;
+        printf("Enter password:");
+        scanf(" %s", pswrd);
+
+        if(strlen(pswrd) < 5){
+            chk = 1;
+            printf("Password is too short. Please try again.\n");
+            continue;
+        }else if(strlen(pswrd) > 10){
+            chk = 1;
+            printf("Password is too long. Please try again.\n");
+            continue;
+        }
+
+        printf("Enter password again:");
+        scanf(" %s", pswrd2);
+        if(strcmp(pswrd, pswrd2) != 0){
+            chk = 1;
+            printf("Password do not match. Please try again.\n");
+        }
+
+    }while(chk!=0);
+    strcmp(p->pswrd, pswrd);
+}
+
+void add_user_player(user *fle, user *p, int n){
+    dte dob;
+    int chk = 0;
+
+    //get_usrnm(fle, p, n); WORKS
+    n += 1;
+    //get_ts(p); //WORKS
+    //get_pswrd(p); //WORKS
+
+    //get_yr(p);
+    //get_mnth(p);
+    //get_day(p->birth.yr, p->birth.mnth, p); //WORKS
 
     /***
         STILL NEED TO ADD TO DATABASE. WHERE??
@@ -137,6 +160,8 @@ void add_user_player(user *fle, user *p){
 
 
 int main() {
+    user fle[10];
+    add_user_player(fle, &fle[0], 0);
     return 0;
 }
 
