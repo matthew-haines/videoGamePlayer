@@ -36,30 +36,30 @@ int sum_dob(dob input)  {
 }    
 
 int compare_dob(struct node parent, struct node child) {
-    if(sum_dob(parent.dob) > sum_dob(child.dob)) return 1;
-    if(sum_dob(parent.dob) < sum_dob(child.dob)) return 0;
+    if(sum_dob(parent.value.birth) > sum_dob(child.value.birth)) return 1;
+    if(sum_dob(parent.value.birth) < sum_dob(child.value.birth)) return 0;
     return -1;
 }
 
 int compare_score(struct node parent, struct node child) {
-    if(parent.tpSc > child.tpSc) return 1;
-    if(parent.tpSc < child.tpSc) return 0;
+    if(parent.value.tpSc > child.value.tpSc) return 1;
+    if(parent.value.tpSc < child.value.tpSc) return 0;
     return -1;
 }
 
-void insert(struct node * to, user what, int (*compare_func)(user parent, user child)){
+void insert(struct node * to, user what, int (*compare_func)(struct node parent, struct node child)){
     struct node * temp = (struct node *)malloc(sizeof(struct node));
     temp->value = what;
     temp->lc = NULL;
     temp->rc = NULL;
     if(compare_func(*to, *temp)){
-        if(to->rc) insert(to->rc, temp->value);
+        if(to->rc) insert(to->rc, temp->value, compare_func);
         else{
             to->rc = temp;
             return;
         }
     }else{
-        if(to->lc) insert(to->lc, temp->value);
+        if(to->lc) insert(to->lc, temp->value, compare_func);
         else{
             to->lc = temp;
             return;
