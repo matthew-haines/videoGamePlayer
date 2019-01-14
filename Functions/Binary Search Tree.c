@@ -21,21 +21,38 @@ typedef struct {
 
 struct node{
     user value;
-    struct node * lc;
-    struct node * rc;
+    user * lc;
+    user * rc;
 };
 
-int compare(struct node parent, struct node child){
+int compare_usrnm(struct node parent, struct node child) {
     if(strcmp(parent.value.usrnm,child.value.usrnm) < 0) return 1; //go right
     if(strcmp(parent.value.usrnm,child.value.usrnm) > 0) return 0; //go left;
     return -1;
 }
-void insert(struct node * to, user what){
+
+int sum_dob(dob input)  {
+    return (input.yr << (4+5) + input.mth) << 5 + input.dy;
+}    
+
+int compare_dob(struct node parent, struct node child) {
+    if(sum_dob(parent.dob) > sum_dob(child.dob)) return 1;
+    if(sum_dob(parent.dob) < sum_dob(child.dob)) return 0;
+    return -1;
+}
+
+int compare_score(struct node parent, struct node child) {
+    if(parent.tpSc > child.tpSc) return 1;
+    if(parent.tpSc < child.tpSc) return 0;
+    return -1;
+}
+
+void insert(struct node * to, user what, int (*compare_func)(user parent, user child)){
     struct node * temp = (struct node *)malloc(sizeof(struct node));
     temp->value = what;
     temp->lc = NULL;
     temp->rc = NULL;
-    if(compare(*to, *temp)){
+    if(compare_func(*to, *temp)){
         if(to->rc) insert(to->rc, temp->value);
         else{
             to->rc = temp;
