@@ -73,19 +73,19 @@ void add_dob(user *p, int sd){
     else p->birth.dy = rand()%30+1;
 }
 
-void add_rand_player(user *fle){
+void add_rand_player(user * fle, int * n){
     int i, j;
     int chk = 0;
     int sd;
     srand(time(NULL));
-    int n = ask_add();
-    int num; //Number of players in db so far
-    for(i=0; i<n; i++){
+    int num = ask_add();
+    for(i=0; i<num; i++){
+
         chk = 0;
         for(j=i; j<MAX_N && chk == 0; j++){
             if(fle[j].fre==0){
                 sd = rand();
-                add_rand_name(fle, &fle[j], sd, num);
+                add_rand_name(fle, &fle[j], sd, *n);
                 //printf("%s\n", fle[j].usrnm);
                 add_pswrd(&fle[j], sd); //WORKS
                 //printf("%s\n", fle[j].pswrd);
@@ -93,8 +93,13 @@ void add_rand_player(user *fle){
                 //printf("%d ", fle[j].tpSc);
                 add_dob(&fle[j], sd);
                 printf("%s, %s, %d, %d\\%d\\%d\n", fle[j].usrnm, fle[j].pswrd, fle[j].tpSc, fle[j].birth.mnth, fle[j].birth.dy, fle[j].birth.yr);
-                chk = 1;
+                fle[j].fre = 1; //Important
+
+                chk = 1; //If we assigned a struct to an open place, we go assign the next structure
+
+                *n += 1; //Number of players we have increases by 1
             }
         }
     }
+
 }

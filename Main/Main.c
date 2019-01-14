@@ -13,5 +13,11 @@
 #include "User_Interface.h"
 
 int main() {
+    user p[200];
+    int n = 0;
+    int x = 1;
+    int i;
+
+    while(x==1) x = menu_options(p, &n);
     return 0;
 }

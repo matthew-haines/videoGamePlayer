@@ -13,8 +13,8 @@ void get_mnth(user *p){
     printf("Please enter the month:\n");
     do{
         scanf(" %d", &num);
-        if(num < 1 && num > 12) printf("Year is invalid. Please try again.\n");
-    }while(num < 1 && num > 12);
+        if(num < 1 || num > 12) printf("Month is invalid. Please try again.\n");
+    }while(num < 1 || num > 12);
     p->birth.mnth = num;
 }
 
@@ -45,8 +45,9 @@ void get_usrnm(user *fle, user *p, int n){
     char name[20];
     do{
         chk = 1;
+        fflush(stdin);
         printf("Enter name:\n");
-        scanf(" %s", name);
+        gets(name);
         if(chck_name(fle, name, n)==0){
             chk = 0;
             printf("Username taken. Please try again.\n");
@@ -58,7 +59,7 @@ void get_usrnm(user *fle, user *p, int n){
             printf("Username too long. Please try again.\n");
         }
     }while(chk==0);
-    strcmp(p->usrnm, name);
+    strcpy(p->usrnm, name);
 }
 
 void get_ts(user *p){
@@ -66,6 +67,7 @@ void get_ts(user *p){
     do{
         printf("Enter Top Score:");
         scanf(" %d", &topSc);
+        fflush(stdin);
         if(topSc < 0) printf("Score is negative. Please try again.\n");
         else if(topSc > 500000) printf("Score is too high. Please try again.\n");
     }while(topSc < 0 || topSc > 500000);
@@ -78,9 +80,9 @@ void get_pswrd(user *p){
     int chk;
     do{
         chk = 0;
+        fflush(stdin);
         printf("Enter password:");
-        scanf(" %s", pswrd);
-
+        gets(pswrd);
         if(strlen(pswrd) < 5){
             chk = 1;
             printf("Password is too short. Please try again.\n");
@@ -99,7 +101,7 @@ void get_pswrd(user *p){
         }
 
     }while(chk!=0);
-    strcmp(p->pswrd, pswrd);
+    strcpy(p->pswrd, pswrd);
 }
 
 void add_user_player(user *fle, user *p, int n){
@@ -107,12 +109,16 @@ void add_user_player(user *fle, user *p, int n){
     int chk = 0;
 
     get_usrnm(fle, p, n); //WORKS
+    printf("Username is %s.\n", p->usrnm);
     get_ts(p); //WORKS
+    printf("%s's Top Score is: %d.\n", p->usrnm, p->tpSc);
     get_pswrd(p); //WORKS
+    printf("%s's password is: %s.\n", p->usrnm, p->pswrd);
 
     get_yr(p);
     get_mnth(p);
     get_day(p->birth.yr, p->birth.mnth, p); //WORKS
+    printf("%s's date of birth is %d\\%d\\%d", p->usrnm, p->birth.mnth, p->birth.dy, p->birth.yr);
 
     /***
         STILL NEED TO ADD TO DATABASE. WHERE??
