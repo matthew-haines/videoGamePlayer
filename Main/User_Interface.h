@@ -15,7 +15,7 @@ void menu_options(user *fle, int n){
                 add_rand_player(fle);
                 break;
         case 2:
-                //output();
+                output(fle, n);
                 break;
         case 3:
                 add_user_player(fle, &fle[n], n);

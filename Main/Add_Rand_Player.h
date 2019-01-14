@@ -60,7 +60,7 @@ void add_tpSc(user *p, int sd){
 void add_dob(user *p, int sd){
     srand(sd);
     int i;
-    int ar[6] = {1, 3, 5, 7, 8, 10, 12};
+    int ar[7] = {1, 3, 5, 7, 8, 10, 12};
     p->birth.yr = rand()%21+1990;
     p->birth.mnth = rand()%12+1;
     p->birth.dy = 0;

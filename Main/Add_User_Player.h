@@ -102,12 +102,11 @@ void get_pswrd(user *p){
     strcmp(p->pswrd, pswrd);
 }
 
-void add_user_player(user *fle, user *p, int *n){
+void add_user_player(user *fle, user *p, int n){
     dte dob;
     int chk = 0;
 
     get_usrnm(fle, p, n); //WORKS
-    *n += 1;
     get_ts(p); //WORKS
     get_pswrd(p); //WORKS
 
