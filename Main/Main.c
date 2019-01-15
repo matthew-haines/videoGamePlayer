@@ -11,6 +11,7 @@
 #include "Add_User_Player.h"
 #include "Output_Player.h"
 #include "User_Interface.h"
+#include "Normal.h"
 
 int main() {
     user p[200];
