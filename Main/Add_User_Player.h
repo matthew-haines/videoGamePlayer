@@ -58,6 +58,7 @@ void get_usrnm(user *fle, user *p, int n){
             chk = 0;
             printf("Username too long. Please try again.\n");
         }
+        haha(name);
     }while(chk==0);
     strcpy(p->usrnm, name);
 }
