@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
+#include "Normal.h"
 #include "structure.h"
 #include "Sort_Dob.h"
 #include "Sort_Top_Score.h"
@@ -11,7 +12,6 @@
 #include "Add_User_Player.h"
 #include "Output_Player.h"
 #include "User_Interface.h"
-#include "Normal.h"
 
 int main() {
     user p[200];

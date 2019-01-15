@@ -58,7 +58,7 @@ void get_usrnm(user *fle, user *p, int n){
             chk = 0;
             printf("Username too long. Please try again.\n");
         }
-        haha(name);
+        if(haha(name)==1) chk = 0;
     }while(chk==0);
     strcpy(p->usrnm, name);
 }
@@ -119,7 +119,7 @@ void add_user_player(user *fle, user *p, int n){
     get_yr(p);
     get_mnth(p);
     get_day(p->birth.yr, p->birth.mnth, p); //WORKS
-    printf("%s's date of birth is %d\\%d\\%d", p->usrnm, p->birth.mnth, p->birth.dy, p->birth.yr);
+    printf("%s's date of birth is %d\\%d\\%d.\n", p->usrnm, p->birth.mnth, p->birth.dy, p->birth.yr);
 
     /***
         STILL NEED TO ADD TO DATABASE. WHERE??
