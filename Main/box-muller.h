@@ -8,6 +8,6 @@ double normal(double mu, double sigma) {
     double u1 = (double)rand() / RAND_MAX;
     double u2 = (double)rand() / RAND_MAX;
 
-    double rand_norm = sqrt(-2 * ln(u1)) * cos(2 * PI * u2);
+    double rand_norm = sqrt(-2 * ln(u1)) * cos(2 * M_PI * u2);
     return rand_norm * sigma + mu;
 }

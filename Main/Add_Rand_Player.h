@@ -1,5 +1,8 @@
+#include "box-muller.h"
 #define MAX_N 100
 #define MAX_TPSC 500000
+#define MEAN_TPSC 50000
+#define STD_DEV_TPSC 100000
 
 int ask_add(){
     int num;
@@ -54,7 +57,7 @@ void add_pswrd(user *p, int sd){
 
 void add_tpSc(user *p, int sd){
     srand(sd);
-    p->tpSc = rand()%(MAX_TPSC+1);
+    p->tpSc = (int)normal(MEAN_TPSC, 100000);
 }
 
 void add_dob(user *p, int sd){
