@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 #include "Normal.h"
 #include "structure.h"
 #include "Sort_Dob.h"

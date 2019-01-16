@@ -92,10 +92,15 @@ void get_pswrd(user *p){
             chk = 1;
             printf("Password is too long. Please try again.\n");
             continue;
+        }else if(pswrd_strength(pswrd) <=2){
+            chk = 1;
+            printf("THATT PASSWORD IS WEAKKKKKKKK. MAKE ANOTHER ONE.\n");
+            continue;
         }
 
         printf("Enter password again:");
-        scanf(" %s", pswrd2);
+        fflush(stdin);
+        gets(pswrd2);
         if(strcmp(pswrd, pswrd2) != 0){
             chk = 1;
             printf("Password do not match. Please try again.\n");
@@ -103,6 +108,18 @@ void get_pswrd(user *p){
 
     }while(chk!=0);
     strcpy(p->pswrd, pswrd);
+}
+
+int pswrd_strength(char *s){
+    int i, up, low, num, other;
+    up = low = num = other = 0;
+    for(i=0; s[i] != 0; i++){
+        if(isupper((int)s[i])) up = 1;
+        else if(islower((int)s[i])) low = 1;
+        else if(isdigit((int)s[i])) num = 1;
+        else other = 1;
+    }
+    return up+low+num+other;
 }
 
 void add_user_player(user *fle, user *p, int n){
