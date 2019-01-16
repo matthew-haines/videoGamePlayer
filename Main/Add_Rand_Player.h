@@ -65,14 +65,14 @@ void add_dob(user *p, int sd){
     int i;
     int ar[7] = {1, 3, 5, 7, 8, 10, 12};
     p->birth.yr = rand()%21+1990;
-    p->birth.mnth = rand()%12+1;
+    p->birth.mth = rand()%12+1;
     p->birth.dy = 0;
     for(i=0; i<6; i++){
-        if(p->birth.mnth == ar[i]) p->birth.dy = -1;
+        if(p->birth.mth == ar[i]) p->birth.dy = -1;
     }
     if(p->birth.dy==-1) p->birth.dy = rand()%31+1;
-    else if(p->birth.mnth==2 && p->birth.yr%4==0) p->birth.dy = rand()%29+1;
-    else if(p->birth.mnth == 2) p->birth.dy = rand()%28+1;
+    else if(p->birth.mth==2 && p->birth.yr%4==0) p->birth.dy = rand()%29+1;
+    else if(p->birth.mth == 2) p->birth.dy = rand()%28+1;
     else p->birth.dy = rand()%30+1;
 }
 
@@ -95,7 +95,7 @@ void add_rand_player(user * fle, int * n){
                 add_tpSc(&fle[j], sd); //WORKS
                 //printf("%d ", fle[j].tpSc);
                 add_dob(&fle[j], sd);
-                printf("%s, %s, %d, %d\\%d\\%d\n", fle[j].usrnm, fle[j].pswrd, fle[j].tpSc, fle[j].birth.mnth, fle[j].birth.dy, fle[j].birth.yr);
+                printf("%s, %s, %d, %d\\%d\\%d\n", fle[j].usrnm, fle[j].pswrd, fle[j].tpSc, fle[j].birth.mth, fle[j].birth.dy, fle[j].birth.yr);
                 fle[j].fre = 1; //Important
 
                 chk = 1; //If we assigned a struct to an open place, we go assign the next structure
