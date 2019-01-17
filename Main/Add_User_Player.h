@@ -8,25 +8,25 @@ void get_yr(user *p){
     p->birth.yr = num;
 }
 
-void get_mnth(user *p){
+void get_mth(user *p){
     int num;
     printf("Please enter the month:\n");
     do{
         scanf(" %d", &num);
         if(num < 1 || num > 12) printf("Month is invalid. Please try again.\n");
     }while(num < 1 || num > 12);
-    p->birth.mnth = num;
+    p->birth.mth = num;
 }
 
-void get_day(int yr, int mnth, user *p){
+void get_day(int yr, int mth, user *p){
     int lng[7] = {1, 3, 5, 7, 8, 10, 12};
     int i;
     int num;
     int chk = 30;
     for(i=0; i<6; i++){
-        if(mnth == lng[i]) chk = 31;
+        if(mth == lng[i]) chk = 31;
     }
-    if(mnth == 2){
+    if(mth == 2){
         if(yr % 4 == 0) chk = 29;
         else chk = 28;
     }
@@ -134,9 +134,9 @@ void add_user_player(user *fle, user *p, int n){
     printf("%s's password is: %s.\n", p->usrnm, p->pswrd);
 
     get_yr(p);
-    get_mnth(p);
-    get_day(p->birth.yr, p->birth.mnth, p); //WORKS
-    printf("%s's date of birth is %d\\%d\\%d.\n", p->usrnm, p->birth.mnth, p->birth.dy, p->birth.yr);
+    get_mth(p);
+    get_day(p->birth.yr, p->birth.mth, p); //WORKS
+    printf("%s's date of birth is %d\\%d\\%d.\n", p->usrnm, p->birth.mth, p->birth.dy, p->birth.yr);
 
     /***
         STILL NEED TO ADD TO DATABASE. WHERE??
