@@ -21,8 +21,8 @@ typedef struct {
 
 struct node{
     user value;
-    user * lc;
-    user * rc;
+    struct node * lc;
+    struct node * rc;
 };
 
 int compare_usrnm(struct node parent, struct node child) {
@@ -32,7 +32,7 @@ int compare_usrnm(struct node parent, struct node child) {
 }
 
 int sum_dob(dob input)  {
-    return (input.yr << (4+5) + input.mth) << 5 + input.dy;
+    return (((input.yr << (9)) + input.mth) << 5) + input.dy;
 }    
 
 int compare_dob(struct node parent, struct node child) {
@@ -48,6 +48,10 @@ int compare_score(struct node parent, struct node child) {
 }
 
 void insert(struct node * to, user what, int (*compare_func)(struct node parent, struct node child)){
+    if(to->value.usrnm[0] == 0){
+        to->value = what;
+        return;
+    }
     struct node * temp = (struct node *)malloc(sizeof(struct node));
     temp->value = what;
     temp->lc = NULL;
@@ -68,34 +72,43 @@ void insert(struct node * to, user what, int (*compare_func)(struct node parent,
     return;
 }
 
-int search(struct node target, user find){
-    if(strcmp(target.value.usrnm,find.usrnm) == 0){
-        return 1; //found;
+struct node * search(struct node * target, user find){
+    if(strcmp(target->value.usrnm,find.usrnm) == 0){
+        return target; //found;
     }
-    if(strcmp(target.value.usrnm,find.usrnm) < 0 && target.rc) return search(*target.rc, find);
-    else{
-        if(target.lc) return search(*target.lc,find);
-    }
-    return 0; //not found
+    if(strcmp(target->value.usrnm,find.usrnm) < 0 && target->rc) return search(target->rc, find);
+    else if(target->lc) return search(target->lc,find);
+    
+    return -1; //not found
+}
+
+void PrintBST(struct node * BST){
+    if(BST->lc) PrintBST(BST->lc);
+    printf("%s %d %d/%d/%d\n", BST->value.usrnm, BST->value.tpSc, BST->value.birth.mth, BST->value.birth.dy, BST->value.birth.yr);
+    if(BST->rc) PrintBST(BST->rc);
+}
+void Recur(struct node * What,int (*compare_func)(struct node parent, struct node child), struct node * Dummy){
+    if(Dummy->value.usrnm[0] == 0) Dummy->value = What->value;
+    else insert(Dummy,What->value, compare_func);
+
+    if(What->lc) Recur(What->lc,compare_func, Dummy);
+    if(What->rc) Recur(What->rc,compare_func, Dummy);
+}
+
+void reSort(struct node * What,int (*compare_func)(struct node parent, struct node child)){
+    struct node Dummy;
+    Dummy.rc = NULL;
+    Dummy.lc = NULL;
+    Dummy.value.usrnm[0] = 0;
+    Recur(What, compare_func, &Dummy);
+    What->value = Dummy.value;
+    What->rc = Dummy.rc;
+    What->lc = Dummy.lc;
 }
 
 int main(){
     struct node Head;
     user ins;
-    user ins2;
-    user ins3;
     Head.lc = NULL;
     Head.rc = NULL;
-    strcpy(ins3.usrnm, "TEST2");
-    strcpy(ins.usrnm, "Hello");
-    Head.value = ins;
-    
-   strcpy(ins2.usrnm, "Z");
-   insert(&Head,ins2);
-    
-    strcpy(ins.usrnm, "LA");
-    insert(&Head,ins);
-    
-    printf("%d %d %d %d\n", search(Head,ins), search(Head,Head.value), search(Head,ins2), search(Head,ins3));
-    //printf("%d %d\n", Bye.rc->value, Bye.rc->rc->value);
 }
