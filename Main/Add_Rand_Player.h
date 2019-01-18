@@ -1,7 +1,7 @@
 #include "box-muller.h"
 #define MAX_N 100
 #define MAX_TPSC 500000
-#define MEAN_TPSC 50000
+#define MEAN_TPSC 250000
 #define STD_DEV_TPSC 100000
 
 int ask_add(){
