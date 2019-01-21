@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define MAX_L 7
+//#include "query-dictionary.h"
+#define MAX_L 8
 
 int gss(char lttr, int rtrn, int *hlth);
 void print_word();
@@ -91,6 +92,19 @@ void w6(){
     "---     \n");
 }
 
+void dead(){
+    printf(""
+    " ____   \n"
+    " |  |   \n"
+    " |      \n"
+    " |      \n"
+    " |      \n"
+    " |  | //\n"
+    " | o--  \n"
+    "--- | \  \n");
+}
+
+
 void print_man(int num){
     switch (num){
         case 0:
@@ -114,6 +128,9 @@ void print_man(int num){
         case 6:
             w6();
             break;
+        case 7:
+            dead();
+            break;
         default:
             break;
     }
@@ -132,6 +149,8 @@ char word[50];
 
 int main(){
     /*HANGMAN GAME*/
+    //char ** p;
+    //p = getDict();
     char lst[][50] = {"hangman", "matthew is not my daddy", "armageddon", "today was not a good day", "hello world"};
     int num = 0;
     char inpt;
@@ -226,7 +245,7 @@ int gss(char lttr, int rtrn, int *hlth){
     printf("Lives left: %d \n", (5-*hlth));
 
     if (*hlth == MAX_L){
-        printf("Sorry, you have ran out of lives. Please try again.");
+        printf("Sorry, you have ran out of lives. Please try again.\n");
         rtrn = -1;
         return rtrn;
     }
