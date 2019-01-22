@@ -7,10 +7,6 @@
 #define DICT_LIST 6
 #define START_SCORE 1000
 
-void guess(char lttr, int *rtrn, int *hlth, int lngth, char *bnk, int *bnk_num, char *word, char *outpt);
-void print_word(int lngth, char *outpt);
-void print_wrong(char *bnk, int bnk_num);
-
 void w0(){
     printf(""
     " ____   \n"
@@ -138,55 +134,6 @@ void print_man(int num){
     }
     printf("\n");
     return;
-}
-
-int main(){
-    /*HANGMAN GAME*/
-    //char ** p;
-    //p = getDict();
-    char lst[][50] = {"MATTHEW WAS NOT HERE", "matthew is not my daddy", "MR. HAINES", "matthew is rawr", "matthew is big brain"};
-    char bnk[50], word[50], outpt[50];
-    int bnk_num, lvs, num;
-    char inpt;
-    int ran, lngth, i, j;
-    int score = START_SCORE;
-
-    num = bnk_num = lvs = 0;
-
-    srand((unsigned)time(NULL));
-    rand();
-
-    printf("Welcome to HANGMAN!\n");
-    system("pause");
-    system("cls");
-
-    strcpy(word, lst[rand()%DICT_LIST]);
-
-    lngth = strlen(word);
-
-    for(i=0; i<lngth; i++){
-        if(word[i] == ' ') outpt[i] = ' ';
-        else outpt[i] = '-';
-    }
-
-    while(num != 1){
-        print_man(lvs);
-        print_wrong(bnk, bnk_num);
-        print_word(lngth, outpt);
-        fflush(stdin);
-        printf("Enter guess:");
-        inpt = getchar();
-        guess(inpt, &num, &lvs, lngth, bnk, &bnk_num, word, outpt);
-        system("pause");
-        system("cls");
-    }
-
-    if(lvs != MAX_L){
-        printf("\nCongratualations, you got it: ");
-        puts(word);
-    }else dead();
-
-    return 0;
 }
 
 void print_word(int lngth, char *outpt){
