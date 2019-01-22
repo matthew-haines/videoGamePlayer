@@ -173,7 +173,7 @@ void guess(char lttr, int *rtrn, int *hlth, int lngth, char *bnk, int *bnk_num, 
         if(lttr == word[j]){
             outpt[j] = lttr;
             no = 1;
-            score += 5000;
+            *score += 5000;
         }
     }
 
@@ -190,6 +190,7 @@ void guess(char lttr, int *rtrn, int *hlth, int lngth, char *bnk, int *bnk_num, 
 
     if (*hlth >= MAX_L){
         printf("Sorry, you have ran out of lives. Please try again.\n");
+        *score = 0;
         *rtrn = 1;
         return;
     }
@@ -229,10 +230,11 @@ int hangman(){
         print_man(lvs);
         print_wrong(bnk, bnk_num);
         print_word(lngth, outpt);
+        printf("SCORE:%d\n", score);
         fflush(stdin);
         printf("Enter guess:");
         inpt = getchar();
-        guess(inpt, &num, &lvs, lngth, bnk, &bnk_num, word, outpt);
+        guess(inpt, &num, &lvs, lngth, bnk, &bnk_num, word, outpt, &score);
         system("pause");
         system("cls");
     }

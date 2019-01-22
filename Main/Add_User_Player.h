@@ -58,21 +58,32 @@ void get_usrnm(user *fle, user *p, int n){
             chk = 0;
             printf("Username too long. Please try again.\n");
         }
-        if(haha(name)==1) chk = 0;
+        //if(haha(name)==1) chk = 0;
     }while(chk==0);
     strcpy(p->usrnm, name);
 }
 
 void get_ts(user *p){
     int topSc;
+    int choice;
+
     do{
-        printf("Enter Top Score:");
-        scanf(" %d", &topSc);
-        fflush(stdin);
-        if(topSc < 0) printf("Score is negative. Please try again.\n");
-        else if(topSc > 500000) printf("Score is too high. Please try again.\n");
-    }while(topSc < 0 || topSc > 500000);
-    p->tpSc = topSc;
+        printf("Enter 1 to enter top score. Enter 2 to play for score.\n");
+        scanf(" %d", &choice);
+    }while(choice != 1 && choice != 2);
+
+    if(choice == 1){
+        do{
+            printf("Enter Top Score:");
+            scanf(" %d", &topSc);
+            fflush(stdin);
+            if(topSc < MIN_TPSC) printf("Score is negative. Please try again.\n");
+            else if(topSc > MAX_TPSC) printf("Score is too high. Please try again.\n");
+        }while(topSc < MIN_TPSC || topSc > MAX_TPSC);
+        p->tpSc = topSc;
+    }else{
+        p->tpSc = hangman();
+    }
 }
 
 void get_pswrd(user *p){
@@ -129,7 +140,9 @@ void add_user_player(user *fle, user *p, int n){
     get_usrnm(fle, p, n); //WORKS
     printf("Username is %s.\n", p->usrnm);
     get_ts(p); //WORKS
-    printf("%s's Top Score is: %d.\n", p->usrnm, p->tpSc);
+    printf("%s's FINAL Score is: %d.\n", p->usrnm, p->tpSc);
+    system("pause");
+    system("cls");
     get_pswrd(p); //WORKS
     printf("%s's password is: %s.\n", p->usrnm, p->pswrd);
 

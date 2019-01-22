@@ -14,13 +14,14 @@ int menu_options(user * fle, int * n){
     switch(inpt){
         case 1:
 			//printf("%d %d", n, *n);
-			add_rand_player(fle, n);
+			//add_rand_player(fle, n);
 			break;
         case 2:
-			output(fle, *n);
+			//output(fle, *n);
 			break;
 		case 3:
 			add_user_player(fle, &fle[*n], *n); //works?
+			//printf("A");
 			*n += 1;
 			break;
         case 4:
@@ -32,7 +33,7 @@ int menu_options(user * fle, int * n){
         case 6:
 			break;
         case 7:
-			age_user_ar(fle, *n);
+			//age_user_ar(fle, *n);
 			break;
         case 8:
 			break;

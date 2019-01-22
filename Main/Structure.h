@@ -2,13 +2,13 @@ typedef struct {
     int mth;
     int dy;
     int yr;
-} dob;
+} dte;
 
 typedef struct {
     char usrnm[10];
     char pswrd[10];
     double salt;
-    dob birth;
+    dte birth;
     int tpSc;
     int fre;
 } user;
