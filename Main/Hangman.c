@@ -3,11 +3,13 @@
 #include <string.h>
 #include <time.h>
 //#include "query-dictionary.h"
-#define MAX_L 8
+#define MAX_L 7
+#define DICT_LIST 6
+#define START_SCORE 1000
 
-int gss(char lttr, int rtrn, int *hlth);
-void print_word();
-void print_wrong(char *bnk);
+void guess(char lttr, int *rtrn, int *hlth, int lngth, char *bnk, int *bnk_num, char *word, char *outpt);
+void print_word(int lngth, char *outpt);
+void print_wrong(char *bnk, int bnk_num);
 
 void w0(){
     printf(""
@@ -99,9 +101,9 @@ void dead(){
     " |      \n"
     " |      \n"
     " |      \n"
-    " |  | //\n"
-    " | o--  \n"
-    "--- | \  \n");
+    " |  |    \n"
+    " | o--- < \n"
+    "--- |     \n");
 }
 
 
@@ -138,34 +140,27 @@ void print_man(int num){
     return;
 }
 
-int lngth;
-char bnk[50];
-int i, j;
-int k;
-int sim;
-int lvs = 0;
-char outpt[50];
-char word[50];
-
 int main(){
     /*HANGMAN GAME*/
     //char ** p;
     //p = getDict();
-    char lst[][50] = {"hangman", "matthew is not my daddy", "armageddon", "today was not a good day", "hello world"};
-    int num = 0;
+    char lst[][50] = {"MATTHEW WAS NOT HERE", "matthew is not my daddy", "MR. HAINES", "matthew is rawr", "matthew is big brain"};
+    char bnk[50], word[50], outpt[50];
+    int bnk_num, lvs, num;
     char inpt;
-    int ran;
-    time_t t;
+    int ran, lngth, i, j;
+    int score = START_SCORE;
 
-    t = time(NULL);
-    srand((unsigned) t);
+    num = bnk_num = lvs = 0;
+
+    srand((unsigned)time(NULL));
     rand();
 
     printf("Welcome to HANGMAN!\n");
     system("pause");
     system("cls");
 
-    strcpy(word, lst[1]);
+    strcpy(word, lst[rand()%DICT_LIST]);
 
     lngth = strlen(word);
 
@@ -174,16 +169,14 @@ int main(){
         else outpt[i] = '-';
     }
 
-    //printf("The word is:");
-
     while(num != 1){
         print_man(lvs);
-        print_wrong(bnk);
-        print_word();
-        printf("Enter guess:");
+        print_wrong(bnk, bnk_num);
+        print_word(lngth, outpt);
         fflush(stdin);
+        printf("Enter guess:");
         inpt = getchar();
-        gss(inpt, num, &lvs);
+        guess(inpt, &num, &lvs, lngth, bnk, &bnk_num, word, outpt);
         system("pause");
         system("cls");
     }
@@ -191,31 +184,33 @@ int main(){
     if(lvs != MAX_L){
         printf("\nCongratualations, you got it: ");
         puts(word);
-    }
+    }else dead();
 
     return 0;
 }
 
-void print_word(){
+void print_word(int lngth, char *outpt){
+    int j;
     printf("Word is:");
     for(j=0; j<lngth; j++)printf("%c", outpt[j]);
     printf("\n");
 }
 
-void print_wrong(char *bnk){
+void print_wrong(char *bnk, int bnk_num){
     int j;
     printf("Wrong Characters: ");
-    for(j=0; j<k; j++) printf("%c ", bnk[j]);
+    for(j=0; j<bnk_num; j++) printf("%c ", bnk[j]);
     printf("\n\n");
     return;
 }
 
-int gss(char lttr, int rtrn, int *hlth){
-    rtrn = 1;
+void guess(char lttr, int *rtrn, int *hlth, int lngth, char *bnk, int *bnk_num, char *word, char *outpt, int *score){
+    int i, j;
+    *rtrn = 1;
     int no = 0;
-    sim = 0;
+    int sim = 0;
 
-    for(j=0; j<k; j++){
+    for(j=0; j<*bnk_num; j++){
         if(lttr == bnk[j]){
             sim = 1;
             break;
@@ -231,6 +226,7 @@ int gss(char lttr, int rtrn, int *hlth){
         if(lttr == word[j]){
             outpt[j] = lttr;
             no = 1;
+            score += 5000;
         }
     }
 
@@ -238,23 +234,68 @@ int gss(char lttr, int rtrn, int *hlth){
     else if (no == 0){
         printf("\n'%c' is not in the word\n", lttr);
         *hlth += 1;
-        bnk[k] = lttr;
-        k += 1;
+        bnk[*bnk_num] = lttr;
+        *bnk_num += 1;
+        *score -= 100;
     }else if (no == 1) printf("\n'%c' is in the word\n", lttr);
 
-    printf("Lives left: %d \n", (5-*hlth));
+    printf("Lives left: %d \n", (MAX_L-*hlth));
 
-    if (*hlth == MAX_L){
+    if (*hlth >= MAX_L){
         printf("Sorry, you have ran out of lives. Please try again.\n");
-        rtrn = -1;
-        return rtrn;
+        *rtrn = 1;
+        return;
     }
 
     for(i=0; i<lngth; i++){
-        if(outpt[i] == '-') rtrn = 0;
+        if(outpt[i] == '-') *rtrn = 0;
+    }
+}
+
+int hangman(){
+    char lst[][50] = {"MATTHEW WAS NOT HERE", "matthew is not my daddy", "MR. HAINES", "matthew is rawr", "matthew is big brain"};
+    char bnk[50], word[50], outpt[50];
+    int bnk_num, lvs, num;
+    char inpt;
+    int ran, lngth, i, j;
+    int score = START_SCORE;
+
+    num = bnk_num = lvs = 0;
+
+    srand((unsigned)time(NULL));
+    rand();
+
+    printf("Welcome to HANGMAN!\n");
+    system("pause");
+    system("cls");
+
+    strcpy(word, lst[rand()%DICT_LIST]);
+
+    lngth = strlen(word);
+
+    for(i=0; i<lngth; i++){
+        if(word[i] == ' ') outpt[i] = ' ';
+        else outpt[i] = '-';
     }
 
-    return rtrn;
+    while(num != 1){
+        print_man(lvs);
+        print_wrong(bnk, bnk_num);
+        print_word(lngth, outpt);
+        fflush(stdin);
+        printf("Enter guess:");
+        inpt = getchar();
+        guess(inpt, &num, &lvs, lngth, bnk, &bnk_num, word, outpt);
+        system("pause");
+        system("cls");
+    }
+
+    if(lvs != MAX_L){
+        printf("\nCongratualations, you got it: ");
+        puts(word);
+    }else dead();
+
+    return score;
 }
 
 
