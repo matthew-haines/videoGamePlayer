@@ -207,11 +207,26 @@ int hangman(){
     char inpt;
     int ran, lngth, i, j;
     int score = START_SCORE;
-
-    num = bnk_num = lvs = 0;
+    char s[30];
 
     srand((unsigned)time(NULL));
     rand();
+
+
+    /*FILE *f;
+    f = fopen("Words.txt", "r");
+    int n_line, ct;
+    ct = 0;
+    n_line = rand()%NUM_WORDS;
+
+
+    if(f == NULL) return -1;
+
+    while(fgets(s, WORD_LEN, f) && ++ct < n_line){}
+
+    printf("%s", s);*/
+
+    num = bnk_num = lvs = 0;
 
     printf("Welcome to HANGMAN!\n");
     system("pause");

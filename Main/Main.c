@@ -11,6 +11,8 @@
 #include "Add_User_Player.h"
 //#include "Output_Player.h"
 #include "User_Interface.h"
+#define NUM_WORDS 5
+#define WORD_LEN 20
 
 int main() {
     user p[200];
