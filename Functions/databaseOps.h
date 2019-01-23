@@ -5,49 +5,24 @@
 #ifndef DATABASEOPS_H_
 #define DATABASEOPS_H_
 
-void writeDB(user * users) {
-    // Writes array of users to file
-	FILE *dbfile;
-	dbfile = fopen("playerDB.txt", "w+");
-    fprintf(dbfile, "%d\n", userCount);
-	for (int i = 0; i < userCount; i++) {
-	    fprintf(dbfile, "%s %d %f %d %d %d %d\n", 
-			users[i].username, users[i].password, 
-			users[i].salt, users[i].dob.day,
-            users[i].dob.month, users[i].dob.year, 
-			users[i].topScore);
-	}
-    fclose(dbfile);
+void ReadDb(FILE * Source, char *Name, struct node * Head){
+  Source = fopen(Name, "rb+");
+  user temp;
+  while(!feof(Source)){
+    fread(&temp, sizeof(user), 1, Source);
+    if(temp.usrnm[0] != 0) //make sure it is a user (sometimes things get left over for some reason)
+    insert(Head, temp, compare_usrnm);
+  }
+  fclose(Source);
 }
 
-int loadDB(user * users) {
-    // Returns the user count and loads array of users
-	FILE *dbfile;
-    printf("Reading from DB...\n");
-	dbfile = fopen("playerDB.txt", "r");
-    if (dbfile) { // Checks if file exists
-        fscanf(dbfile, "%d\n", &userCount);
-        printf("%d users found\n", userCount);
-        for (int i = 0; i < userCount; i++) {
-            fscanf(dbfile, "%s %d %f %d %d %d %d\n", 
-                &users[i].username, &users[i].password, 
-                &users[i].salt, &users[i].dob.day, 
-                &users[i].dob.month, &users[i].dob.year, 
-                &users[i].topScore); 
-        }
-        fclose(dbfile);
-        return userCount;
-    }
-    else {
-        return -1;
-    }
-}
+void WriteDb(FILE * Source, char *Name, struct node * Head){
+   if(Source == NULL) Source = fopen(Name, "wb+");
+   fwrite(&Head->value, sizeof(user), 1, Source);
 
-int checkTaken(char * username, user * users) {
-    for (int i = 0; i < userCount; i++) {
-        if (strncmp(username, users[i].username, 16)) return 1;
-    }
-    return 0;
+   if(Head->lc) WriteDb(Source,Name,Head->lc); //traverse BST
+   if(Head->rc) WriteDb(Source,Name,Head->rc); //traverse BST
+
 }
 
 void addUser(user newUser, user * users) {
