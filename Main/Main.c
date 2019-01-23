@@ -197,9 +197,8 @@ void get_usrnm(struct node * Head,user *p){
     }while(chk==0);
     strcpy(p->usrnm, name);
 }
-
 /*
-void get_ts(user *p){  //user must play game in order to get top score
+void get_ts(user *p){
     int topSc;
     do{
         printf("Enter Top Score:");
@@ -392,10 +391,16 @@ void del_ts(struct node * Head){
 
     insert(Temp,na,compare_score);
     RecurDel_Ts(Head, Temp);
-
-    Head->value = Temp->lc->value;
-    Head->rc = Temp->lc->rc;
-    Head->lc = Temp->lc->lc;
+    if(Temp->lc){
+      Head->value = Temp->lc->value;
+      Head->rc = Temp->lc->rc;
+      Head->lc = Temp->lc->lc;
+    }else{
+      printf("Should Delete all");
+      Head->value.usrnm[0] = 0;
+      Head->rc = NULL;
+      Head->lc = NULL;
+    }
 }
 
 struct node * delNode(struct node * Head, user find, int (* compare_func)(struct node parent, struct node child)){
@@ -441,14 +446,15 @@ void ReadDb(FILE * Source, char *Name, struct node * Head){
   user temp;
   while(!feof(Source)){
     fread(&temp, sizeof(user), 1, Source);
-    if(temp.usrnm[0] != 0) //make sure it is a user (sometimes things get left over for some reason)
+    if(temp.usrnm[0] != 0 && search(Head, temp) == (struct node *)-1) //make sure it is a user (sometimes things get left over for some reason)
     insert(Head, temp, compare_usrnm);
   }
   fclose(Source);
 }
 
 void WriteDb(FILE * Source, char *Name, struct node * Head){
-   if(Source == NULL) Source = fopen(Name, "wb+");
+   if(Source == NULL) Source = fopen(Name, "wb");
+   
    fwrite(&Head->value, sizeof(user), 1, Source);
 
    if(Head->lc) WriteDb(Source,Name,Head->lc); //traverse BST
@@ -502,8 +508,8 @@ int menu_options(struct node * Tree){
         default:
             break;
     }
-      system("pause");
-      system("cls");
+    //   system("pause");
+    //   system("cls");
     return 1;
 }
 
@@ -529,13 +535,3 @@ int main() {
     return 0;
 }
 
-
-int main() {
-    user p[200];
-    int n = 0;
-    int x = 1;
-    int i;
-
-    while(x == 1) x = menu_options(p, &n);
-    return 0;
-}
