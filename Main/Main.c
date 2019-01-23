@@ -5,13 +5,13 @@
 #include <time.h>
 #include <ctype.h>
 #include <math.h>
-#include "Normal.h"
 #include "Hangman.h"
-#include "Structure.h"
-#include "Add_Rand_Player.h"
-#include "Add_User_Player.h"
-#include "Output_Player.h"
-#include "User_Interface.h"
+// #include "box-muller.h"  if we really want to, we can put functions into .h files
+// #include "Structure.h"
+// #include "Add_Rand_Player.h"
+// #include "Add_User_Player.h"
+// #include "Output_Player.h"
+// #include "User_Interface.h"
 #define NUM_WORDS 5
 #define WORD_LEN 20
 #define MAX_N 100
