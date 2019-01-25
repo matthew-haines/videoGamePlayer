@@ -1,5 +1,6 @@
-#include <stdlib.h>
-#include <math.h>
+#define MAX_TPSC 100000
+#define MEAN_TPSC 50000
+#define STD_DEV_TPSC 10000
 
 double normal(double mu, double sigma, int sd) {
     // Performs box-muller transform on uniform random variables and returns
