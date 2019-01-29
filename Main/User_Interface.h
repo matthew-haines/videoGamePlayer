@@ -17,6 +17,7 @@ int menu_options(struct node * Tree){
             add_rand_player(Tree);
             break;
         case 2:
+            printf("Username - Password - Top Score - Date of Birth(Month/Day/Year)\n");
             PrintBST(Tree);
             break;
         case 3:

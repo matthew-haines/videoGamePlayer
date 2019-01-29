@@ -1,4 +1,3 @@
-
 typedef struct {
     int mth;
     int dy;

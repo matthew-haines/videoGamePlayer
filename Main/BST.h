@@ -1,4 +1,3 @@
-
 int compare_usrnm(struct node parent, struct node child) {
     if(strcmp(parent.value.usrnm,child.value.usrnm) < 0) return 1; //go right
     if(strcmp(parent.value.usrnm,child.value.usrnm) > 0) return 0; //go left;
