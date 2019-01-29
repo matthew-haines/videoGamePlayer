@@ -26,13 +26,22 @@ int main() {
     FILE * Source;
     char fileName[100];
     strcpy(fileName, "StorePlayers.txt");
-    ReadDb(Source, fileName, &Head);
+    //ReadDb(Source, fileName, &Head);
+    user ad;
+    ad.birth.dy = 0;
+    ad.birth.mth = 0;
+    ad.birth.yr = 0;
+    ad.tpSc = 0;
+    strcpy(ad.pswrd, "admin");
+    strcpy(ad.usrnm, "admin");
+
+    insert(&Head, ad, compare_usrnm);
 
     int x = 1;
 
     while(x == 1) x = menu_options(&Head);
     Source = NULL;
     WriteDb(Source, fileName, &Head);
-    
+
     return 0;
 }
