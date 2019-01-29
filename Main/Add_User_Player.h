@@ -1,12 +1,15 @@
-
+#define MAX_YEAR 2010
+#define MIN_YEAR 1990
+#define MAX_NAME 10
+#define MIN_NAME 5
 
 void get_yr(user *p){
     int num;
     printf("Please enter the year:\n");
     do{
         scanf(" %d", &num);
-        if(num < 1990 || num > 2010) printf("Year is invalid. Please try again.\n");
-    }while(num < 1990 || num > 2010);
+        if(num < MIN_YEAR || num > MAX_YEAR) printf("Year is invalid. Please try again.\n");
+    }while(num < MIN_YEAR || num > MAX_YEAR);
     p->birth.yr = num;
 }
 
@@ -32,9 +35,9 @@ void get_day(int yr, int mnth, user *p){
         if(yr % 4 == 0) chk = 29;
         else chk = 28;
     }
-    
+
     printf("Please enter the day:\n");
-    
+
     do{
         scanf(" %d", &num);
         if(num < 1 || num > chk) printf("Date is invalid. Please try again.\n");
@@ -48,7 +51,7 @@ void get_usrnm(struct node * Head,user *p){
     do{
         chk = 1;
         fflush(stdin);
-        printf("Enter name:\n");
+        printf("Enter name (6-10 characters):\n");
         gets(name);
         strcpy(p->usrnm, name);
         if(search(Head,*p) != (struct node *)-1){
@@ -64,7 +67,7 @@ void get_usrnm(struct node * Head,user *p){
     }while(chk==0);
     strcpy(p->usrnm, name);
 }
-/*
+
 void get_ts(user *p){
     int topSc;
     do{
@@ -75,18 +78,17 @@ void get_ts(user *p){
         else if(topSc > 500000) printf("Score is too high. Please try again.\n");
     }while(topSc < 0 || topSc > 500000);
     p->tpSc = topSc;
-}*/
+}
 
 int pswrd_strength(char *s){
-    int i, up, low, num, other;
-    up = low = num = other = 0;
+    int i, up, low, num;
+    up = low = num = 0;
     for(i=0; s[i] != 0; i++){
         if(isupper((int)s[i])) up = 1;
         else if(islower((int)s[i])) low = 1;
         else if(isdigit((int)s[i])) num = 1;
-        else other = 1;
     }
-    return up+low+num+other;
+    return up+low+num;
 }
 
 void get_pswrd(user *p){
@@ -96,7 +98,7 @@ void get_pswrd(user *p){
     do{
         chk = 0;
         fflush(stdin);
-        printf("Enter password:");
+        printf("Enter a strong 5-8 digit password (at least 1 lowercase, 1 uppercase and 1 numerical character):");
         gets(pswrd);
         if(strlen(pswrd) < 5){
             chk = 1;
@@ -108,10 +110,10 @@ void get_pswrd(user *p){
             continue;
         }else if(pswrd_strength(pswrd) <=2){
             chk = 1;
-            printf("THATT PASSWORD IS WEAKKKKKKKK. MAKE ANOTHER ONE.\n");
+            printf("That is a weak password.\n");
             continue;
         }
-        
+
         printf("Enter password again:");
         fflush(stdin);
         gets(pswrd2);
@@ -119,18 +121,17 @@ void get_pswrd(user *p){
             chk = 1;
             printf("Password do not match. Please try again.\n");
         }
-        
+
     }while(chk!=0);
     strcpy(p->pswrd, pswrd);
 }
 
 
 void add_user_player(struct node * Head){
-    //dte dob;
     int chk = 0;
     user p;
     get_usrnm(Head, &p); //WORKS
-    //get_ts(&p); //WORKS
+    get_ts(&p); //WORKS
     p.tpSc = 0;
     get_pswrd(&p); //WORKS
     get_yr(&p);

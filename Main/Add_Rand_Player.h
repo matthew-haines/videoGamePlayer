@@ -48,6 +48,7 @@ void add_dob(user *p, int sd){
     for(i=0; i<6; i++){
         if(p->birth.mth == ar[i]) p->birth.dy = -1;
     }
+
     if(p->birth.dy==-1) p->birth.dy = rand()%31+1;
     else if(p->birth.mth==2 && p->birth.yr%4==0) p->birth.dy = rand()%29+1;
     else if(p->birth.mth == 2) p->birth.dy = rand()%28+1;

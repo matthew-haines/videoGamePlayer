@@ -43,6 +43,7 @@ int menu_options(struct node * Tree){
         case 10:
             return -1;
         default:
+            printf("Invalid request. Please try again\n.");
             break;
     }
       system("pause");
