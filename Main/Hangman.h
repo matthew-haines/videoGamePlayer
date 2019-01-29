@@ -4,7 +4,7 @@
 #include <time.h>
 //#include "query-dictionary.h"
 #define MAX_L 7
-#define DICT_LIST 6
+#define DICT_LIST 8
 #define START_SCORE 1000
 
 void w0(){
@@ -201,7 +201,7 @@ void guess(char lttr, int *rtrn, int *hlth, int lngth, char *bnk, int *bnk_num, 
 }
 
 int hangman(){
-    char lst[][50] = {"MATTHEW WAS NOT HERE", "matthew is not my daddy", "MR. HAINES", "matthew is rawr", "matthew is big brain"};
+    char lst[][50] = {"Girrafe", "Programming", "Lion", "Matthew is rawr", "Hangman", "Apple", "Hello", "Pineapple"};
     char bnk[50], word[50], outpt[50];
     int bnk_num, lvs, num;
     char inpt;
