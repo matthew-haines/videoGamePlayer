@@ -36,6 +36,7 @@ void del_ts(struct node * Head){
     na.birth.mth = 0;
     na.birth.yr = 0;
     strcpy(na.usrnm, "admin");
+    strcpy(na.pswrd, "admin");
     na.tpSc = 0;
     insert(Head, na, compare_usrnm); //reinsert admin since it will always be deleted
 }
