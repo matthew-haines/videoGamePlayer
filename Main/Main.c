@@ -26,8 +26,8 @@ int main() {
     FILE * Source;
     char fileName[100];
     strcpy(fileName, "StorePlayers.txt");
-    //ReadDb(Source, fileName, &Head);
-    user ad;
+    ReadDb(Source, fileName, &Head);
+    /*user ad;
     ad.birth.dy = 0;
     ad.birth.mth = 0;
     ad.birth.yr = 0;
@@ -35,7 +35,7 @@ int main() {
     strcpy(ad.pswrd, "admin");
     strcpy(ad.usrnm, "admin");
 
-    insert(&Head, ad, compare_usrnm);
+    insert(&Head, ad, compare_usrnm);*/
 
     int x = 1;
 
