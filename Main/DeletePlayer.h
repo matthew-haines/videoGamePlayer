@@ -9,14 +9,19 @@ void del_ts(struct node * Head){
     Temp->lc = NULL;
     Temp->rc = NULL;
     int y;
-    printf("Enter the minimum acceptable top score. All players below this value will be deleted:\n");
+    do{
+    printf("Enter the minimum acceptable top score (Must be greater than 0) . All players below this value will be deleted:\n");
     scanf(" %d", &y);
+        if(y <= 0) printf("Invalid, try again\n");
+    }while(y <= 0);
+    
     user na;
     na.tpSc = y+1;
     strcpy(na.usrnm, "DUMMY:)))");
 
     insert(Temp,na,compare_score);
     RecurDel_Ts(Head, Temp);
+    
     if(Temp->lc){
       Head->value = Temp->lc->value;
       Head->rc = Temp->lc->rc;
@@ -27,13 +32,22 @@ void del_ts(struct node * Head){
       Head->rc = NULL;
       Head->lc = NULL;
     }
+    na.birth.dy = 0;
+    na.birth.mth = 0;
+    na.birth.yr = 0;
+    strcpy(na.usrnm, "admin");
+    na.tpSc = 0;
+    insert(Head, na, compare_usrnm); //reinsert admin since it will always be deleted
 }
 
 void del_id(struct node * Head){
-    char del[100];
     user temp;
     printf("Enter name to delete:");
-    scanf("%s", temp.usrnm); //try to use gets
+    scanf("%s", temp.usrnm);
+    if(strcmp(temp.usrnm, "admin") == 0){
+        printf("Please do not attempt to delete admin\n");
+        return;
+    }
     fflush(stdin);
     reSort(Head, compare_usrnm);
     delNode(Head, temp, compare_usrnm);
