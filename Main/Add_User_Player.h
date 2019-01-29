@@ -47,13 +47,20 @@ void get_day(int yr, int mnth, user *p){
     p->birth.dy = num;
 }
 
+int spaces(char *s){
+    int i=0;
+    while(s[i] != 0 && s[i] != ' ') i++;
+    if(s[i] == 0) return 0;
+    else return 1;
+}
+
 void get_usrnm(struct node * Head,user *p){
     int chk;
     char name[MAX_NAME+10];
     do{
         chk = 1;
         fflush(stdin);
-        printf("Enter name (%d-%d characters):\n", MIN_NAME, MAX_NAME);
+        printf("Enter name (%d-%d characters) without spaces:\n", MIN_NAME, MAX_NAME);
         gets(name);
         strcpy(p->usrnm, name);
         if(search(Head,*p) != (struct node *)-1){
@@ -65,6 +72,9 @@ void get_usrnm(struct node * Head,user *p){
         }else if(strlen(name) > MAX_NAME){
             chk = 0;
             printf("Username too long. Please try again.\n");
+        }else if(spaces(name)==1){
+            chk = 0;
+            printf("Username has spaces. Please try again.\n");
         }
     }while(chk==0);
     strcpy(p->usrnm, name);

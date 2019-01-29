@@ -52,20 +52,20 @@ struct node * search(struct node * target, user find){
     }
     if(strcmp(target->value.usrnm,find.usrnm) < 0 && target->rc) return search(target->rc, find);
     else if(target->lc) return search(target->lc,find);
-    
+
     return (struct node *)-1; //not found
 }
 
 void PrintBST(struct node * BST){
     if(BST->lc) PrintBST(BST->lc);
-    printf("%s %d %d/%d/%d\n", BST->value.usrnm, BST->value.tpSc, BST->value.birth.mth, BST->value.birth.dy, BST->value.birth.yr);
+    printf("%s %s %d %d/%d/%d\n", BST->value.usrnm, BST->value.pswrd, BST->value.tpSc, BST->value.birth.mth, BST->value.birth.dy, BST->value.birth.yr);
     if(BST->rc) PrintBST(BST->rc);
 }
 
 void Recur(struct node * What,int (*compare_func)(struct node parent, struct node child), struct node * Dummy){
     if(Dummy->value.usrnm[0] == 0) Dummy->value = What->value;
     else insert(Dummy,What->value, compare_func);
-    
+
     if(What->lc) Recur(What->lc,compare_func, Dummy);
     if(What->rc) Recur(What->rc,compare_func, Dummy);
 }

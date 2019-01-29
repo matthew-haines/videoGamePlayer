@@ -1,5 +1,3 @@
-
-
 void RecurDel_Ts(struct node * source, struct node * Target){
     if(source->lc) RecurDel_Ts(source->lc, Target);
     insert(Target, source->value, compare_score);
@@ -11,10 +9,10 @@ void del_ts(struct node * Head){
     Temp->lc = NULL;
     Temp->rc = NULL;
     int y;
-    printf("Enter the value you want to delete:");
-    scanf("%d", &y);
+    printf("Enter the minimum acceptable top score. All players below this value will be deleted:\n");
+    scanf(" %d", &y);
     user na;
-    na.tpSc = y;
+    na.tpSc = y+1;
     strcpy(na.usrnm, "DUMMY:)))");
 
     insert(Temp,na,compare_score);
@@ -24,14 +22,12 @@ void del_ts(struct node * Head){
       Head->rc = Temp->lc->rc;
       Head->lc = Temp->lc->lc;
     }else{
-      printf("Should Delete all");
+      printf("Deleting all players.\n");
       Head->value.usrnm[0] = 0;
       Head->rc = NULL;
       Head->lc = NULL;
     }
 }
-
-
 
 void del_id(struct node * Head){
     char del[100];
