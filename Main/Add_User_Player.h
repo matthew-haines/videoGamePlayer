@@ -73,7 +73,7 @@ void get_usrnm(struct node * Head,user *p){
 void get_ts(user *p){
     int topSc;
     do{
-        printf("Enter Top Score:");
+        printf("Enter Top Score [0-%d]:", MAX_TPSC);
         scanf(" %d", &topSc);
         fflush(stdin);
         if(topSc < 0) printf("Score is negative. Please try again.\n");
