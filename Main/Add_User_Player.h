@@ -1,7 +1,9 @@
 #define MAX_YEAR 2010
 #define MIN_YEAR 1990
 #define MAX_NAME 10
-#define MIN_NAME 5
+#define MIN_NAME 6
+#define MAX_PSWRD 8
+#define MIN_PSWRD 5
 
 void get_yr(user *p){
     int num;
@@ -47,20 +49,20 @@ void get_day(int yr, int mnth, user *p){
 
 void get_usrnm(struct node * Head,user *p){
     int chk;
-    char name[20];
+    char name[MAX_NAME+10];
     do{
         chk = 1;
         fflush(stdin);
-        printf("Enter name (6-10 characters):\n");
+        printf("Enter name (%d-%d characters):\n", MIN_NAME, MAX_NAME);
         gets(name);
         strcpy(p->usrnm, name);
         if(search(Head,*p) != (struct node *)-1){
             chk = 0;
             printf("Username taken. Please try again.\n");
-        }else if(strlen(name)<6){
+        }else if(strlen(name)< MIN_NAME){
             chk = 0;
             printf("Username too short. Please try again.\n");
-        }else if(strlen(name) > 10){
+        }else if(strlen(name) > MAX_NAME){
             chk = 0;
             printf("Username too long. Please try again.\n");
         }
@@ -75,8 +77,8 @@ void get_ts(user *p){
         scanf(" %d", &topSc);
         fflush(stdin);
         if(topSc < 0) printf("Score is negative. Please try again.\n");
-        else if(topSc > 500000) printf("Score is too high. Please try again.\n");
-    }while(topSc < 0 || topSc > 500000);
+        else if(topSc > MAX_TPSC) printf("Score is too high. Please try again.\n");
+    }while(topSc < 0 || topSc > MAX_TPSC);
     p->tpSc = topSc;
 }
 
@@ -92,19 +94,19 @@ int pswrd_strength(char *s){
 }
 
 void get_pswrd(user *p){
-    char pswrd[10];
-    char pswrd2[10];
+    char pswrd[MAX_PSWRD+10];
+    char pswrd2[MAX_PSWRD+10];
     int chk;
     do{
         chk = 0;
         fflush(stdin);
-        printf("Enter a strong 5-8 digit password (at least 1 lowercase, 1 uppercase and 1 numerical character):");
+        printf("Enter a strong %d-%d digit password (at least 1 lowercase, 1 uppercase and 1 numerical character):", MIN_PSWRD, MAX_PSWRD);
         gets(pswrd);
-        if(strlen(pswrd) < 5){
+        if(strlen(pswrd) < MIN_PSWRD){
             chk = 1;
             printf("Password is too short. Please try again.\n");
             continue;
-        }else if(strlen(pswrd) > 10){
+        }else if(strlen(pswrd) > MAX_PSWRD){
             chk = 1;
             printf("Password is too long. Please try again.\n");
             continue;
@@ -132,7 +134,7 @@ void add_user_player(struct node * Head){
     user p;
     get_usrnm(Head, &p); //WORKS
     get_ts(&p); //WORKS
-    p.tpSc = 0;
+    //p.tpSc = 0;
     get_pswrd(&p); //WORKS
     get_yr(&p);
     get_mnth(&p);

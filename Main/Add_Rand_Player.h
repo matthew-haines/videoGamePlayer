@@ -1,4 +1,3 @@
-
 void add_rand_name(struct node * fle, user *p, int sd){
     int i, j, lngth, alph, f;
     srand(sd);
@@ -42,7 +41,7 @@ void add_dob(user *p, int sd){
     srand(sd);
     int i;
     int ar[7] = {1, 3, 5, 7, 8, 10, 12};
-    p->birth.yr = rand()%21+1990;
+    p->birth.yr = rand()%21+MIN_YEAR;
     p->birth.mth = rand()%12+1;
     p->birth.dy = 0;
     for(i=0; i<6; i++){
